@@ -1,0 +1,2433 @@
+CREATE DATABASE "TomorrowxTogether"
+    WITH 
+    OWNER = postgres
+    ENCODING = 'UTF8'
+    CONNECTION LIMIT = -1;
+
+
+----------------------------------TABLAS---------------
+
+CREATE TABLE public."Usuario"
+(
+    "idUsuario" integer not null,
+    "nUsuario" character varying(50) NOT NULL,
+    "correo" character varying(50) NOT NULL,
+    "clave" character varying(50) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKUsuario" PRIMARY KEY ("idUsuario")
+);
+
+ALTER TABLE IF EXISTS public."Usuario"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Usuario"
+    ALTER COLUMN "idUsuario" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Album"
+(
+    "idAlbum" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "nCanciones" integer DEFAULT NULL,
+    "tipo" character varying(50) NOT NULL,
+    "versiones" character varying(100) NULL,
+    "lanzamiento" varying(30) NOT NULL,
+    "idioma" character varying(50) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKAlbum" PRIMARY KEY ("idAlbum")
+);
+
+ALTER TABLE IF EXISTS public."Album"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Album"
+    ALTER COLUMN "idAlbum" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Anuncio"
+(
+    "idAnuncio" integer not null,
+    "marca" character varying(50) NOT NULL,
+    "titulo" character varying(100) NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "fecha" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKAnuncio" PRIMARY KEY ("idAnuncio")
+);
+
+ALTER TABLE IF EXISTS public."Anuncio"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Anuncio"
+    ALTER COLUMN "idAnuncio" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Cancion"
+(
+    "idCancion" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKCancion" PRIMARY KEY ("idCancion")
+);
+
+ALTER TABLE IF EXISTS public."Cancion"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Cancion"
+    ALTER COLUMN "idCancion" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Choreography"
+(
+    "idChoreography" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKChoreography" PRIMARY KEY ("idChoreography")
+);
+
+ALTER TABLE IF EXISTS public."Choreography"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Choreography"
+    ALTER COLUMN "idChoreography" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Colaboracion"
+(
+    "idColaboracion" integer not null,
+    "artistas" character varying(50) NOT NULL,
+    "idCancion" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKColaboracion" PRIMARY KEY ("idColaboracion")
+);
+
+ALTER TABLE IF EXISTS public."Colaboracion"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Colaboracion"
+    ALTER COLUMN "idColaboracion" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Cover"
+(
+    "idCover" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "artistas" character varying(50) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKCover" PRIMARY KEY ("idCover")
+);
+
+ALTER TABLE IF EXISTS public."Cover"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Cover"
+    ALTER COLUMN "idCover" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Documental"
+(
+    "idDocumental" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKDocumental" PRIMARY KEY ("idDocumental")
+);
+
+ALTER TABLE IF EXISTS public."Documental"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Documental"
+    ALTER COLUMN "idDocumental" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."DreamWeek"
+(
+    "idDreamWeek" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKDreamWeek" PRIMARY KEY ("idDreamWeek")
+);
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    ALTER COLUMN "idDreamWeek" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."DreamWeek"
+(
+    "idDreamWeek" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKDreamWeek" PRIMARY KEY ("idDreamWeek")
+);
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    ALTER COLUMN "idDreamWeek" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Fanchant"
+(
+    "idFanchant" integer not null,
+    "link" character varying(200) NOT NULL,
+    "idCancion" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKFanchant" PRIMARY KEY ("idFanchant")
+);
+
+ALTER TABLE IF EXISTS public."Fanchant"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Fanchant"
+    ALTER COLUMN "idFanchant" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Integrante"
+(
+    "idIntegrante" integer not null,
+    "nombre" character varying(50) NOT NULL,
+    "profesion" character varying(200) NOT NULL,
+    "edad" integer NOT NULL,
+    "fechaN" character varying(30) NOT NULL,
+    "lugarN" character varying(50) NOT NULL,
+    "estatura" character numeric(10,2) NOT NULL,
+    "peso" character varying(10) NOT NULL,
+    "signoZodiacal" character varying(50) NOT NULL,
+    "posicion" character varying(200) NOT NULL,
+    "entrenamiento" character varying(50) NOT NULL,
+    "idiomas" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKIntegrante" PRIMARY KEY ("idIntegrante")
+);
+
+ALTER TABLE IF EXISTS public."Integrante"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Integrante"
+    ALTER COLUMN "idIntegrante" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."MC"
+(
+    "idMC" integer not null,
+    "programa" character varying(50) NOT NULL,
+    "cadena" character varying(50) NOT NULL,
+    "periodo" character varying(50) NOT NULL,
+    "idIntegrante" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKMC" PRIMARY KEY ("idMC")
+);
+
+ALTER TABLE IF EXISTS public."MC"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."MC"
+    ALTER COLUMN "idMC" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."MoodDiary"
+(
+    "idMoodDiary" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "idIntegrante" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKMoodDiary" PRIMARY KEY ("idMoodDiary")
+);
+
+ALTER TABLE IF EXISTS public."MoodDiary"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."MoodDiary"
+    ALTER COLUMN "idMoodDiary" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."MV"
+(
+    "idMV" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKMV" PRIMARY KEY ("idMV")
+);
+
+ALTER TABLE IF EXISTS public."MV"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."MV"
+    ALTER COLUMN "idMV" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."OneDream"
+(
+    "idOneDream" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKOneDream" PRIMARY KEY ("idOneDream")
+);
+
+ALTER TABLE IF EXISTS public."OneDream"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."OneDream"
+    ALTER COLUMN "idOneDream" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Opening"
+(
+    "idOpening" integer not null,
+    "anime" character varying(50) NOT NULL,
+    "idCancion" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKOpening" PRIMARY KEY ("idOpening")
+);
+
+ALTER TABLE IF EXISTS public."Opening"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Opening"
+    ALTER COLUMN "idOpening" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Ost"
+(
+    "idOst" integer not null,
+    "kDrama" character varying(50) NOT NULL,
+    "idCancion" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKOst" PRIMARY KEY ("idOst")
+);
+
+ALTER TABLE IF EXISTS public."Ost"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Ost"
+    ALTER COLUMN "idOst" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Performance"
+(
+    "idPerformance" integer not null,    
+    "titulo" character varying(100) NOT NULL,
+    "evento" character varying(50) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKPerformance" PRIMARY KEY ("idPerformance")
+);
+
+ALTER TABLE IF EXISTS public."Performance"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Performance"
+    ALTER COLUMN "idPerformance" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Playground"
+(
+    "idPlayground" integer not null,
+    "episodio" integer NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKPlayground" PRIMARY KEY ("idPlayground")
+);
+
+ALTER TABLE IF EXISTS public."Playground"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Playground"
+    ALTER COLUMN "idPlayground" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Premio"
+(
+    "idPremio" integer not null,
+    "nombre" character varying(200) NOT NULL,
+    "tipo" character varying(50) NOT NULL,
+    "año" integer NOT NULL,
+    "evento" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKPremio" PRIMARY KEY ("idPremio")
+);
+
+ALTER TABLE IF EXISTS public."Premio"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Premio"
+    ALTER COLUMN "idPremio" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."RadioShow"
+(
+    "idRadioShow" integer not null,
+    "nombre" character varying(50) NOT NULL,
+    "fecha" character varying(30) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKRadioShow" PRIMARY KEY ("idRadioShow")
+);
+
+ALTER TABLE IF EXISTS public."RadioShow"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."RadioShow"
+    ALTER COLUMN "idRadioShow" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Revista"
+(
+    "idRevista" integer not null,
+    "nombre" character varying(50) NOT NULL,
+    "año" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKRevista" PRIMARY KEY ("idRevista")
+);
+
+ALTER TABLE IF EXISTS public."Revista"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Revista"
+    ALTER COLUMN "idRevista" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."Show"
+(
+    "idShow" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "fecha" date NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKShow" PRIMARY KEY ("idShow")
+);
+
+ALTER TABLE IF EXISTS public."Show"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."Show"
+    ALTER COLUMN "idShow" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TalkxToday"
+(
+    "idTalkxToday" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "temporada" integer NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTalkxToday" PRIMARY KEY ("idTalkxToday")
+);
+
+ALTER TABLE IF EXISTS public."TalkxToday"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TalkxToday"
+    ALTER COLUMN "idTalkxToday" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TheStarSeekers"
+(
+    "idTheStarSeekers" integer not null,
+    "app" character varying(50) NOT NULL,
+    "link" character varying(500) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTheStarSeekers" PRIMARY KEY ("idTheStarSeekers")
+);
+
+ALTER TABLE IF EXISTS public."TheStarSeekers"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TheStarSeekers"
+    ALTER COLUMN "idTheStarSeekers" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."ToDo"
+(
+    "idToDo" integer not null,
+    "episodio" integer NULL,
+    "titulo" character varying(100) NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKToDo" PRIMARY KEY ("idToDo")
+);
+
+ALTER TABLE IF EXISTS public."ToDo"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."ToDo"
+    ALTER COLUMN "idToDo" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TTerview"
+(
+    "idTTerview" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTTerview" PRIMARY KEY ("idTTerview")
+);
+
+ALTER TABLE IF EXISTS public."TTerview"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TTerview"
+    ALTER COLUMN "idTTerview" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TVShow"
+(
+    "idTVShow" integer not null,
+    "nombre" character varying(50) NOT NULL,
+    "episodio" integer NULL,
+    "link" character varying(200) NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTVShow" PRIMARY KEY ("idTVShow")
+);
+
+ALTER TABLE IF EXISTS public."TVShow"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TVShow"
+    ALTER COLUMN "idTVShow" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TVShowyMas"
+(
+    "idTVShowyMas" integer not null,
+    "cadenaEstacion" character varying(30) NOT NULL,
+    "idRadioShow" integer NULL,
+    "idTVShow" integer NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTVShowyMas" PRIMARY KEY ("idTVShowyMas")
+);
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    ALTER COLUMN "idTVShowyMas" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TXT"
+(
+    "idTXT" integer not null,
+    "nombre" character varying(50) NOT NULL,
+    "agencia" character varying(50) NOT NULL,
+    "pais" character varying(50) NOT NULL,
+    "debut" character varying(30) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTXT" PRIMARY KEY ("idTXT")
+);
+
+ALTER TABLE IF EXISTS public."TXT"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TXT"
+    ALTER COLUMN "idTXT" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TXTEpisode"
+(
+    "idTXTEpisode" integer not null,
+    "titulo" character varying(100) NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTXTEpisode" PRIMARY KEY ("idTXTEpisode")
+);
+
+ALTER TABLE IF EXISTS public."TXTEpisode"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TXTEpisode"
+    ALTER COLUMN "idTXTEpisode" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TXTOriginal"
+(
+    "idTXTOriginal" integer not null,
+    "descripcion" character varying(50) NOT NULL,
+    "numero" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTXTOriginal" PRIMARY KEY ("idTXTOriginal")
+);
+
+ALTER TABLE IF EXISTS public."TXTOriginal"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TXTOriginal"
+    ALTER COLUMN "idTXTOriginal" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."TXTxEnhypen"
+(
+    "idTXTxEnhypen" integer not null,
+    "tipo" character varying(50) NOT NULL,
+    "plataforma" character varying(50) NOT NULL,
+    "idDocumental" integer NULL,
+    "idPlayground" integer NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKTXTxEnhypen" PRIMARY KEY ("idTXTxEnhypen")
+);
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    ALTER COLUMN "idTXTxEnhypen" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."XTime"
+(
+    "idXTime" integer not null,
+    "titulo" integer NOT NULL,
+    "duracion" character numeric(10,2) NOT NULL,
+    "link" character varying(200) NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKXTime" PRIMARY KEY ("idXTime")
+);
+
+ALTER TABLE IF EXISTS public."XTime"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."XTime"
+    ALTER COLUMN "idXTime" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."AlbumCancion"
+(
+    "idAlbumCancion" integer not null,
+    "idAlbum" integer NOT NULL,
+    "idCancion" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKAlbumCancion" PRIMARY KEY ("idAlbumCancion")
+);
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    ALTER COLUMN "idAlbumCancion" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."AnuncioIntegrante"
+(
+    "idAnuncioIntegrante" integer not null,
+    "idAnuncio" integer NOT NULL,
+    "idIntegrante" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKAnuncioIntegrante" PRIMARY KEY ("idAnuncioIntegrante")
+);
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    ALTER COLUMN "idAnuncioIntegrante" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."CancionMV"
+(
+    "idCancionMV" integer not null,
+    "idCancion" integer NOT NULL,
+    "idMV" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKCancionMV" PRIMARY KEY ("idCancionMV")
+);
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    ALTER COLUMN "idCancionMV" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+CREATE TABLE public."RevistaIntegrante"
+(
+    "idRevistaIntegrante" integer not null,
+    "idRevista" integer NOT NULL,
+    "idIntegrante" integer NOT NULL,
+    "estatus" integer NOT NULL DEFAULT 1,
+    "idUsuarioCrea" integer NOT NULL,
+    "fechaCrea" date NOT NULL,
+    "idUsuarioModifica" integer DEFAULT NULL,
+    "fechaModifica" date DEFAULT NULL,
+    CONSTRAINT "PKRevistaIntegrante" PRIMARY KEY ("idRevistaIntegrante")
+);
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    OWNER to postgres;
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    ALTER COLUMN "idRevistaIntegrante" ADD GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 999);
+
+
+----------------------------RELACIONES-------------------
+
+
+ALTER TABLE IF EXISTS public."Usuario"
+    ADD CONSTRAINT "FKUsuarioUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Usuario"
+    ADD CONSTRAINT "FKUsuarioUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Album"
+    ADD CONSTRAINT "FKAlbumUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Album"
+    ADD CONSTRAINT "FKAlbumUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Anuncio"
+    ADD CONSTRAINT "FKAnuncioUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Anuncio"
+    ADD CONSTRAINT "FKAnuncioUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Cancion"
+    ADD CONSTRAINT "FKCancionUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Cancion"
+    ADD CONSTRAINT "FKCancionUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Choreography"
+    ADD CONSTRAINT "FKChoreographyUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Choreography"
+    ADD CONSTRAINT "FKChoreographyUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Colaboracion"
+    ADD CONSTRAINT "FKColaboracionUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Colaboracion"
+    ADD CONSTRAINT "FKColaboracionUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Colaboracion"
+    ADD CONSTRAINT "FKColaboracionCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Cover"
+    ADD CONSTRAINT "FKCoverUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Cover"
+    ADD CONSTRAINT "FKCoverUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Documental"
+    ADD CONSTRAINT "FKDocumentalUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Documental"
+    ADD CONSTRAINT "FKDocumentalUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    ADD CONSTRAINT "FKDreamWeekUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."DreamWeek"
+    ADD CONSTRAINT "FKDreamWeekUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Fanchant"
+    ADD CONSTRAINT "FKFanchantUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Fanchant"
+    ADD CONSTRAINT "FKFanchantUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Fanchant"
+    ADD CONSTRAINT "FKFanchantCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Integrante"
+    ADD CONSTRAINT "FKIntegranteUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Integrante"
+    ADD CONSTRAINT "FKIntegranteUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MC"
+    ADD CONSTRAINT "FKMCUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MC"
+    ADD CONSTRAINT "FKMCUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MC"
+    ADD CONSTRAINT "FKMCIntegrante" FOREIGN KEY ("idIntegrante")
+    REFERENCES public."Integrante" ("idIntegrante") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MoodDiary"
+    ADD CONSTRAINT "FKMoodDiaryUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MoodDiary"
+    ADD CONSTRAINT "FKMoodDiaryUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MoodDiary"
+    ADD CONSTRAINT "FKMoodDiaryIntegrante" FOREIGN KEY ("idIntegrante")
+    REFERENCES public."Integrante" ("idIntegrante") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MV"
+    ADD CONSTRAINT "FKMVUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."MV"
+    ADD CONSTRAINT "FKMVUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."OneDream"
+    ADD CONSTRAINT "FKOneDreamUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."OneDream"
+    ADD CONSTRAINT "FKOneDreamUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Opening"
+    ADD CONSTRAINT "FKOpeningUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Opening"
+    ADD CONSTRAINT "FKOpeningUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Opening"
+    ADD CONSTRAINT "FKOpeningCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Ost"
+    ADD CONSTRAINT "FKOstUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Ost"
+    ADD CONSTRAINT "FKOstUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Ost"
+    ADD CONSTRAINT "FKOstCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Performance"
+    ADD CONSTRAINT "FKPerformanceUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Performance"
+    ADD CONSTRAINT "FKPerformanceUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Playground"
+    ADD CONSTRAINT "FKPlaygroundUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Playground"
+    ADD CONSTRAINT "FKPlaygroundUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+ALTER TABLE IF EXISTS public."Premio"
+    ADD CONSTRAINT "FKPremioUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Premio"
+    ADD CONSTRAINT "FKPremioUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+ALTER TABLE IF EXISTS public."RadioShow"
+    ADD CONSTRAINT "FKRadioShowUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."RadioShow"
+    ADD CONSTRAINT "FKRadioShowUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Revista"
+    ADD CONSTRAINT "FKRevistaUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Revista"
+    ADD CONSTRAINT "FKRevistaUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Show"
+    ADD CONSTRAINT "FKShowUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."Show"
+    ADD CONSTRAINT "FKShowUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TalkxToday"
+    ADD CONSTRAINT "FKTalkxTodayUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TalkxToday"
+    ADD CONSTRAINT "FKTalkxTodayUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TheStarSeekers"
+    ADD CONSTRAINT "FKTheStarSeekersUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TheStarSeekers"
+    ADD CONSTRAINT "FKTheStarSeekersUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."ToDo"
+    ADD CONSTRAINT "FKToDoUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."ToDo"
+    ADD CONSTRAINT "FKToDoUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TTerview"
+    ADD CONSTRAINT "FKTTerviewUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TTerview"
+    ADD CONSTRAINT "FKTTerviewUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShow"
+    ADD CONSTRAINT "FKTVShowUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShow"
+    ADD CONSTRAINT "FKTVShowUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    ADD CONSTRAINT "FKTVShowyMasUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    ADD CONSTRAINT "FKTVShowyMasUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    ADD CONSTRAINT "FKTVShowyMasRadioShow" FOREIGN KEY ("idRadioShow")
+    REFERENCES public."RadioShow" ("idRadioShow") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TVShowyMas"
+    ADD CONSTRAINT "FKTVShowyMasTVShow" FOREIGN KEY ("idTVShow")
+    REFERENCES public."TVShow" ("idTVShow") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXT"
+    ADD CONSTRAINT "FKTXTUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXT"
+    ADD CONSTRAINT "FKTXTUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTEpisode"
+    ADD CONSTRAINT "FKTXTEpisodeUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTEpisode"
+    ADD CONSTRAINT "FKTXTEpisodeUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTOriginal"
+    ADD CONSTRAINT "FKTXTOriginalUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTOriginal"
+    ADD CONSTRAINT "FKTXTOriginalUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    ADD CONSTRAINT "FKTXTxEnhypenUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    ADD CONSTRAINT "FKTXTxEnhypenUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    ADD CONSTRAINT "FKTXTxEnhypenDocumental" FOREIGN KEY ("idDocumental")
+    REFERENCES public."Documental" ("idDocumental") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."TXTxEnhypen"
+    ADD CONSTRAINT "FKTXTxEnhypenPlayground" FOREIGN KEY ("idPlayground")
+    REFERENCES public."Playground" ("idPlayground") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."XTime"
+    ADD CONSTRAINT "FKXTimeUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."XTime"
+    ADD CONSTRAINT "FKXTimeUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."XTime"
+    ADD CONSTRAINT "FKXTimeIntegrante" FOREIGN KEY ("idIntegrante")
+    REFERENCES public."Integrante" ("idIntegrante") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    ADD CONSTRAINT "FKAlbumCancionUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    ADD CONSTRAINT "FKAlbumCancionUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    ADD CONSTRAINT "FKAlbumCancionAlbum" FOREIGN KEY ("idAlbum")
+    REFERENCES public."Album" ("idAlbum") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AlbumCancion"
+    ADD CONSTRAINT "FKAlbumCancionCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    ADD CONSTRAINT "FKAnuncioIntegranteUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    ADD CONSTRAINT "FKAnuncioIntegranteUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    ADD CONSTRAINT "FKAnuncioIntegranteAnuncio" FOREIGN KEY ("idAnuncio")
+    REFERENCES public."Anuncio" ("idAnuncio") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."AnuncioIntegrante"
+    ADD CONSTRAINT "FKAnuncioIntegranteIntegrante" FOREIGN KEY ("idIntegrante")
+    REFERENCES public."Integrante" ("idIntegrante") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    ADD CONSTRAINT "FKCancionMVUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    ADD CONSTRAINT "FKCancionMVUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    ADD CONSTRAINT "FKCancionMVCancion" FOREIGN KEY ("idCancion")
+    REFERENCES public."Cancion" ("idCancion") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."CancionMV"
+    ADD CONSTRAINT "FKCancionMVMV" FOREIGN KEY ("idMV")
+    REFERENCES public."MV" ("idMV") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    ADD CONSTRAINT "FKRevistaIntegranteUsuarioCrea" FOREIGN KEY ("idUsuarioCrea")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    ADD CONSTRAINT "FKRevistaIntegranteUsuarioModifica" FOREIGN KEY ("idUsuarioModifica")
+    REFERENCES public."Usuario" ("idUsuario") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    ADD CONSTRAINT "FKRevistaIntegranteRevista" FOREIGN KEY ("idRevista")
+    REFERENCES public."Revista" ("idRevista") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+ALTER TABLE IF EXISTS public."RevistaIntegrante"
+    ADD CONSTRAINT "FKRevistaIntegranteIntegrante" FOREIGN KEY ("idIntegrante")
+    REFERENCES public."Integrante" ("idIntegrante") MATCH SIMPLE
+    ON UPDATE NO ACTION
+    ON DELETE NO ACTION
+    NOT VALID;
+
+
+---------------------------REGISTROS-------------------------------------------
+
+INSERT INTO public."Usuario"("nUsuario", "correo", "clave", "idUsuarioCrea", "fechaCrea")
+	VALUES ('DanyGa02', ' I19050603@monclova.tecnm.mx', ' Tec12345.', 1, NOW());
+ 
+INSERT INTO public. Album ("titulo", "nCanciones", "tipo", "versiones", "lanzamiento", "idioma", "idUsuarioCrea", "fechaCrea")
+    VALUES ('The Dream Chapter: Star ', 5, ' Mini Album', null , '04-03-2019', ' Coreano', 1, NOW()),
+		   ('The Dream Chapter: Magic', 8, ' Album', ' Arcadia, Sanctuary', '21-10-2019', ' Coreano', 1, NOW()),
+		   ('Magic Hour', 3, ' Single Album', null, '15/02/2020', ' Japones', 1, NOW()),
+		   ('The Dream Chapter: Eternity', 6, ' Mini Album', ' Part, Stardboard', '18-05-2020', ' Coreano', 1, NOW()),
+           ('Drama', 3, ' Single Album', ' Standard, Type A, Tape B, Tape C', '19-08-2020', ' Japones', 1, NOW()),
+		   ('Minisode 1: Blue Hour', 5, ' Mini Album', ' R, AR, VR', '26-10-2020', ' Coreano', 1, NOW()),
+           ('Still Dreaming', 10, ' Album', ' Limited Edition A, Limited Edition B', '20-01-2021', ' Japones', 1, NOW()),
+		   ('The Chaos Chapter: FREEZE', 8, ' Album', ' WORLD, YOU, BOY', '31-05-2021', ' Coreano', 1, NOW()),
+		   ('The Chaos Chapter: FIGTH OR ESPCAPE', 11, ' Album Repackage', ' Fight, Escape', '17-08-2021', ' Coreano', 1, NOW()),
+           ('Chaotic Wonderland', 4, ' Mini Album', ' Standard Edition, Limited Edition A, Limited Edition B', '10-11-2021', ' Japones', 1, NOW()),
+		   ('Minisode 2: Thursdays Child', 5, ' Mini Album', ' MESS, END, HATE', '09-05-2022', ' Coreano', 1, NOW());
+
+INSERT INTO public. Anuncio ("marca", "titulo", "duracion", "link", "año", "idUsuarioCrea", "fechaCrea")
+    VALUES ('ItS SKIN', null, 0.55, 'https://www.youtube.com/watch?v=BxYxAvjQGkM&ab_channel=It%27SSKIN%EC%9E%87%EC%B8%A0%EC%8A%A4%ED%82%A8', 2019, 1, NOW()),
+           ('ItS SKIN', null, 0.23, 'https://www.youtube.com/watch?v=qQEIHxjwDj8&ab_channel=It%27SSKIN%EC%9E%87%EC%B8%A0%EC%8A%A4%ED%82%A8', 2019, 1, NOW()),
+           ('Lotte Duty Free', ' Lets Do something Fun', 1.18, 'https://www.youtube.com/watch?v=xt46wt3IX4U&ab_channel=LDFTVbylottedutyfree', 2019, 1, NOW()),
+           ('Skoolooks', ' SKOOLOOKS Making Film with TXT', 0.55, 'https://www.youtube.com/watch?v=vGCPyi8Ax_w&ab_channel=%EC%8A%A4%EC%BF%A8%EB%A3%A9%EC%8A%A4', 2019, 1, NOW()),
+           ('Skoolooks', ' SKOOLOOKS Making Film with TXT', 0.54, 'https://www.youtube.com/watch?v=r_EQgDlL4FY&ab_channel=%EC%8A%A4%EC%BF%A8%EB%A3%A9%EC%8A%A4', 2020, 1, NOW()),
+           ('ItS SKIN', null, 0.18, 'https://www.youtube.com/watch?v=5evESf2lXKE&ab_channel=It%27SSKIN%EC%9E%87%EC%B8%A0%EC%8A%A4%ED%82%A8', 2020, 1, NOW()),
+           ('40IN', ' 70sec (Beauty Brand Main Video x TXT)', 1.09, 'https://www.youtube.com/watch?v=VTq0GUjNsfo&ab_channel=FOREUL', 2021, 1, NOW()),
+           ('Lotte Duty Free', ' TOMORROW X TOGETHER with LDF', 0.53, 'https://www.youtube.com/watch?v=hDlxHnH_Inc&ab_channel=LDFTVbylottedutyfree', 2021, 1, NOW()),
+           ('Lotte Duty Free', ' Lotte Duty Free ESG Delivered', 1.25, 'https://www.youtube.com/watch?v=-607lmpssOM&ab_channel=LDFTVbylottedutyfree', 2021, 1, NOW()),
+           ('Lotte Duty Free', ' ALL NEW LDF MAGAZINE', 1.01, 'https://www.youtube.com/watch?v=HDXGGCsMvzw&ab_channel=LDFTVbylottedutyfree', 2022, 1, NOW());
+
+INSERT INTO public. Cancion ("titulo", "duracion", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Blue Orangeade', 3.06, 1, NOW()),
+           ('CROWN', 3.51, 1, NOW()),
+           ('Our Summer', 3.30, 1, NOW()),
+           ('Cat & Dog', 3.08, 1, NOW()),
+           ('Nap of a Star', 4.03, 1, NOW()),
+           ('New Rules', 2.55, 1, NOW()),
+           ('9 and Three Quarters (Run Away)', 3.32, 1, NOW()),
+           ('Roller Coaster', 3.34, 1, NOW()),
+           ('Poppin Star', 3.13, 1, NOW()),
+           ('Cant We Just Leave The Monster Alive?', 3.51, 1, NOW()),
+           ('Magic Island', 3.13, 1, NOW()),
+           ('20cm', 3.37, 1, NOW()),
+           ('Angel Or Devil', 3.52, 1, NOW()),
+           ('9 to 4 Bun no 3 Bansen de Kimi wo Matsu (Run Away) [Japanese Ver.]', 3.32, 1, NOW()),
+           ('Aru Hi, Atama Kara Tsuno ga Haeta (CROWN) [Japanese Ver.] ', 3.51, 1, NOW()),
+           ('Angel Or Devil [Japanese Ver.]', 3.52, 1, NOW()),
+           ('Drama', 3.29, 1, NOW()),
+           ('Cant You See Me? ', 3.21, 1, NOW()),
+           ('Fairy of Shampoo', 4.27, 1, NOW()),
+           ('Maze in the Mirror', 3.46, 1, NOW()),
+           ('PUMA', 3.25, 1, NOW()),
+           ('Eternally', 3.37, 1, NOW()),
+           ('DRAMA [Japanese Ver.]', 3.29, 1, NOW()),
+           ('Eien no Hikare (Everlasting Shine) ', 3.13, 1, NOW()),
+           ('Cant You See Me? (Sekai ga Moete Shimatta Yoru, Bokutachi wa...) [Japanese Ver.]', 3.21, 1, NOW()),
+           ('Ghosting', 3.43, 1, NOW()),
+           ('Blue Hour', 3.29, 1, NOW()),
+           ('We Lost The Summer', 3.30, 1, NOW()),
+           ('Wishlist ', 3.11, 1, NOW()),
+           ('Way Home', 3.02, 1, NOW()),
+           ('Intro : DREAMING', 1.15, 1, NOW()),
+           ('Force', 4.02, 1, NOW()),
+           ('Blue Hour [Japanese Ver.]', 3.29, 1, NOW()),
+           ('Outro : STILL', 1.14, 1, NOW()),
+           ('Anti-Romantic', 3.35, 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori', 3.22, 1, NOW()),
+           ('Magic', 2.40, 1, NOW()),
+           ('Ice Cream', 3.23, 1, NOW()),
+           ('What if I had been that PUMA', 3.33, 1, NOW()),
+           ('No Rules', 3.06, 1, NOW()),
+           ('Dear Sputnik', 3.15, 1, NOW()),
+           ('Frost', 3.15, 1, NOW()),
+           ('LO$ER=LO♡ER', 3.18, 1, NOW()),
+           ('MOA Diary (Dubaddu Wari Wari)', 3.08, 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori (Emocore Mix)', 3.39, 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) (Feat. Ikura de YOASOBI) [Japanese Ver.]', 3.39, 1, NOW()),
+           ('MOA Diary (Dubaddu Wari Wari) [Japanese Ver.]', 3.08, 1, NOW()),
+           ('Ito', 4.04, 1, NOW()),
+           ('Opening Sequence', 2.58, 1, NOW()),
+           ('Good Boy Gone Bad', 3.12, 1, NOW()),
+           ('Trust Fund Baby', 2.36, 1, NOW()),
+           ('Lonely Boy (The tattoo on my ring finger)', 2.49, 1, NOW()),
+           ('Thursdays Child Has Far To Go', 3.31, 1, NOW()),
+           ('Your Light', 3.38, 1, NOW()),
+           ('Love Sight', 4.13, 1, NOW()),
+           ('EYES', 3.34, 1, NOW()),
+           ('PS5 (Feat. Yeon Jun & Tae Hyun de TXT y Alan Walker)', 2.33, 1, NOW());
+
+INSERT INTO public. Choreography ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('CROWN Dance Practice ', 3.49, 'https://www.youtube.com/watch?v=6HMsGJRLtto&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=54&ab_channel=TOMORROWXTOGETHEROFFICIAL',1, NOW()),
+           ('Blue Orangeade Dance Practice', 3.06, 'https://www.youtube.com/watch?v=nzgUcGMR2QI&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=53&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cat & Dog Dance Practice', 3.08, 'https://www.youtube.com/watch?v=JKp80jCzho0&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=52&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cat & Dog Dance Practice (Animal ver.)', 6.01, 'https://www.youtube.com/watch?v=xlTGcoynI0k&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=51&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('CROWN Dance Practice (CU ver)', 3.49, 'https://www.youtube.com/watch?v=xbMQ1QKRY9Y&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=50&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cat & Dog Dance Practice (Appeal ver.)', 3.13, 'https://www.youtube.com/watch?v=V2NBFDF24MU&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=49&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Run Away Dance Practice', 3.34, 'https://www.youtube.com/watch?v=jqHslIR2x7w&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=48&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Run Away Dance Practice (Halloween ver.)', 3.34, 'https://www.youtube.com/watch?v=O1zrpn9RpFo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=47&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('New Rules Dance Practice', 2.53, 'https://www.youtube.com/watch?v=YVAEyZ35_ew&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=46&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Angel Or Devil Dance Practice', 3.58, 'https://www.youtube.com/watch?v=KyQacFvXWAM&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=45&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('KBS Kayodae Festival Performance Dance Practice', 5.35, 'https://www.youtube.com/watch?v=TBjMFuzQ2-k&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=44&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('SBS Kayo Daejeon Performance Dance Practice', 5.09, 'https://www.youtube.com/watch?v=Peouo5Ur_vo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=43&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cant We Just Leave The Monster Alive? Dance Practice', 3.55, 'https://www.youtube.com/watch?v=6oQk-ANS5Gs&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=42&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cant You See Me? Dance Practice', 3.30, 'https://www.youtube.com/watch?v=HwdOeu8I4Ho&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=41&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('PUMA Dance Practice', 3.32, 'https://www.youtube.com/watch?v=qz7bJKO_JzU&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=40&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Fairy of Shampoo Dance Practice', 4.33, 'https://www.youtube.com/watch?v=paamxYLDOIE&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=39&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Drama Dance Practice', 3.37, 'https://www.youtube.com/watch?v=9bGCUD2-0J4&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=38&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Blue Hour Dance Practice', 4.29, 'https://www.youtube.com/watch?v=ODM1B2f-VcQ&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=37&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('We Lost The Summer Dance Practice (Halloween ver.)', 3.42, 'https://www.youtube.com/watch?v=9oLhnxYAp94&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=36&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Blue Hour 2020 MMA Performance Dance Practice', 5.23, 'https://www.youtube.com/watch?v=0VNQznmN9JI&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=35&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Outro 2020 MMA Performance Dance Practice', 1.22, 'https://www.youtube.com/watch?v=0UiUTy4OWUI&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=34&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('We Lost The Summer Dance Practice', 3.39, 'https://www.youtube.com/watch?v=DGAwKpSRtWE&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=33&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2020 MAMA Performance Dance Practice', 3.03, 'https://www.youtube.com/watch?v=IqodQuZVt4Q&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=32&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('HUG 2020 KBS Kayodae Festival Dance Practice', 2.21, 'https://www.youtube.com/watch?v=6fuCHWgZHtw&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=31&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sherlock 2020 SBS Kayo Daejeon Dance Practice', 1.57, 'https://www.youtube.com/watch?v=keXzZbB2QaA&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=30&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('PUMA (Dance Break ver.) 2021 GDA Dance Practice', 4.19, 'https://www.youtube.com/watch?v=Py4SDmNKgfI&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=29&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2021 NYEL We Lost The Summer Intro Dance Practice', 2.20, 'https://www.youtube.com/watch?v=8M77ziieeyg&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=28&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2021 NYEL PUMA YEONJUN SOLO Dance Practice', 0.52, 'https://www.youtube.com/watch?v=2CFJxHWILrg&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=27&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sriracha Dance Practice #MOA_CAMPUS', 1.03, 'https://www.youtube.com/watch?v=tMJ3pM4Fzzo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=26&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cant We Just Leave The Monster Alive? Dance Practice (CU ver.) #MOA_CAMPUS', 3.56, 'https://www.youtube.com/watch?v=5yR8zRmwLNo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, GETDATE()),
+           ('Poppin Star Dance Practice', 1.05, 'https://www.youtube.com/watch?v=DF_scSQac7Y&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Dance Practice', 3.32, 'https://www.youtube.com/watch?v=AXcwwO_YeKo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Magic Dance Practice', 2.46, 'https://www.youtube.com/watch?v=IXNn0AEtYbQ&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Magic Special Performance Video', 2.47, 'https://www.youtube.com/watch?v=AP2WEsJfPYU&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Magic Special Performance Video (Full Shot ver.)', 2.45, 'https://www.youtube.com/watch?v=t211_1sPAvY&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('No Rules Dance Practice', 3.15, 'https://www.youtube.com/watch?v=lDRkALaSjzU&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('LO$ER=LO♡ER Dance Practice', 3.24, 'https://www.youtube.com/watch?v=XN30AIbLY7Y&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Roller Coaster Dance Practice', 3.39, 'https://www.youtube.com/watch?v=LsB_vPItR48&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('MOA Diary (Dubaddu Wari Wari) Dance Practice', 3.16, 'https://www.youtube.com/watch?v=PPk20sflyRs&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=15&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('MOA Diary (Dubaddu Wari Wari) Dance Practice (Chuseok ver.)', 3.18, 'https://www.youtube.com/watch?v=BuTquuu7gbk&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=14&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Dance Practice (Halloween ver.)', 3.38, 'https://www.youtube.com/watch?v=mrQoTK3-2eY&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Frost Special Performance Video', 3.33, 'https://www.youtube.com/watch?v=MjKO8ikTgcg&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Frost Special Performance Video (Full Shot ver.)', 3.33, 'https://www.youtube.com/watch?v=5PTLDeKq-so&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Legend of K-POP 2021 KBS Kayodae Festival Dance Practice', 6.45, 'https://www.youtube.com/watch?v=WQMFIExw8Yc&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=10&ab_channel=HYBELABELS', 1, NOW()),
+           ('2022 Weverse Con Intro Dance Practice', 2.00, 'https://www.youtube.com/watch?v=s-KG-n16_EQ&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2022 Weverse Con Frost HUENINGKAI SOLO Dance Practice', 0.45, 'https://www.youtube.com/watch?v=_OI6lCAhryU&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2022 Weverse Con Magic (Dance Break ver.) Dance Practice', 2.45, 'https://www.youtube.com/watch?v=A_mhrmMeqqg&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2022 Weverse Con Come Back Home Dance Practice', 2.10, 'https://www.youtube.com/watch?v=1y1I2zRlp_Q&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2021 MMA Outro Dance Practice', 0.56, 'https://www.youtube.com/watch?v=oav-BD1gYQQ&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('It Boy, The Rockstar Dance Practice #MOA_PRODUCTION', 2.39, 'https://www.youtube.com/watch?v=M2Wh95BjPHo&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sriracha (Full ver.) Dance Practice', 2.52, 'https://www.youtube.com/watch?v=MHwNVXbYtrM&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Good Boy Gone Bad Dance Practice', 3.17, 'https://www.youtube.com/watch?v=rxMwUwqGp40&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Opening Sequence Dance Practice', 3.02, 'https://www.youtube.com/watch?v=eU8om2tfSYQ&list=PLcZxoPUYVQX2t6dT6PsSLo1j0Xbv7UBbd&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. Colaboracion ("artistas", "idCancion", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Seori', 36, 1, NOW()),
+           ('Ikura de YOASOBI', 46, 1, NOW()),
+           ('Salem Ilese', 57, 1, NOW());
+
+INSERT INTO public. Cover ("titulo", "artista", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('F2020', ' Avenue Beat', 3.02, 'https://www.youtube.com/watch?v=zyfUmUg0_T8&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('In My Blood', ' Shawn Mendes', 3.31, 'https://www.youtube.com/watch?v=kM2_vDdpM7Q&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Over And Over Again', ' Nathan Sykes', 2.46, 'https://www.youtube.com/watch?v=xOHmc7htijg&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sriracha', ' Marteen', 3.05, 'https://www.youtube.com/watch?v=NJz6MoMsOGo&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Youngblood', ' 5 Seconds of Summer', 2.19, 'https://www.youtube.com/watch?v=DOxLgW2dJAs&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Let me', ' ZAYN', 4.21, 'https://www.youtube.com/watch?v=b7zvnLaF5XM&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('STAY', ' The Kid LAROI, Justin Bieber', 1.40, 'https://www.youtube.com/watch?v=ON9_T5DnMr8&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sweet Dreams', ' TXT Version', 3.04, 'https://www.youtube.com/watch?v=ZKIRK0nFdYk&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sk8er Boi', 'Avril Lavigne', 3.24, 'https://www.youtube.com/watch?v=vB80JBXETMk&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Wonder', ' ADOY', 3.56, 'https://www.youtube.com/watch?v=SIr1EJLyZ20&list=PLcZxoPUYVQX3wUNmq1QyIHikGC5oE-T-l&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. Documental ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('BACKSTAGE: TXT x EN-', 42.54, 'https://www.youtube.com/watch?v=OE8h-ZkvIJ0', 1, NOW());
+
+INSERT INTO public. DreamWeek ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Hello, MOA ACADEMY', 1.10, 'https://www.youtube.com/watch?v=DRclbWjYI3M&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=35&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Understanding Dreams', 8.56, 'https://www.youtube.com/watch?v=hbtAt_H-hnk&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=34&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics', 4.58, 'https://www.youtube.com/watch?v=-KB9vbuGvLA&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=33&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics - BEOMGYU', 4.54, 'https://www.youtube.com/watch?v=Jopcxb2rJJs&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=32&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics - SOOBIN', 4.47, 'https://www.youtube.com/watch?v=lpGuOgslbDM&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=31&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics - YEONJUN', 4.54, 'https://www.youtube.com/watch?v=IqE70MLLRcQ&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=30&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics - TAEHYUN', 4.53, 'https://www.youtube.com/watch?v=FFQrlJ-gCc8&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=29&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Moa Gymnastics - HUENINGKAI', 4.49, 'https://www.youtube.com/watch?v=kChn5D2t3_I&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=28&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cheerful Athletic Association', 43.13, 'https://www.youtube.com/watch?v=eyNwLSD3nb0&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=27&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('See you next time, MOA', 0.54, 'https://www.youtube.com/watch?v=dHCRe0ydMsY&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=26&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Hello, MOA CAMPUS #MOA_CAMPUS', 3.01, 'https://www.youtube.com/watch?v=p9ACUWhyBvs&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sriracha (Original Song: Marteen)', 3.06, 'https://www.youtube.com/watch?v=NJz6MoMsOGo&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Today TXT Collection #MOA_CAMPUS', 11.30, 'https://www.youtube.com/watch?v=ZS5X4HHVDNQ&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sriracha Dance Practice #MOA_CAMPUS', 1.03, 'https://www.youtube.com/watch?v=tMJ3pM4Fzzo&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Behind the Scenes of Sriracha Cover #MOA_CAMPUS', 5.46, 'https://www.youtube.com/watch?v=OKov3GfNLWY&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=21&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cant We Just Leave The Monster Alive? Dance Practice (CU ver.) #MOA_CAMPUS', 3.56, 'https://www.youtube.com/watch?v=5yR8zRmwLNo&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - TOMORROW X TOGETHER #MOA_CAMPUS', 8.22, 'https://www.youtube.com/watch?v=_mmBLrvDUYA&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - SOOBIN #MOA_CAMPUS', 3.04, 'https://www.youtube.com/watch?v=okJ59q4tqfw&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - YEONJUN #MOA_CAMPUS', 3.04, 'https://www.youtube.com/watch?v=BEct55AjIUc&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - BEOMGYU #MOA_CAMPUS', 3.04, 'https://www.youtube.com/watch?v=7AzNQhiIQpg&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - TAEHYUN #MOA_CAMPUS', 3.05, 'https://www.youtube.com/watch?v=zqtgCEDHdnY&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=15&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - HUENINGKAI #MOA_CAMPUS', 3.04, 'https://www.youtube.com/watch?v=joQpZgwytXw&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=14&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Youth Assembly #MOA_CAMPUS', 71.32, 'https://www.youtube.com/watch?v=p1O3W4viw3w&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('See you next time, MOA #MOA_CAMPUS', 0.48, 'https://www.youtube.com/watch?v=tWUWEtJuEA8&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Hello, MOA PRODUCTION #MOA_PRODUCTION', 2.50, 'https://www.youtube.com/watch?v=bfU9LWerEjU&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Drama Special Clip #MOA_PRODUCTION', 4.14, 'https://www.youtube.com/watch?v=U0PnfzTprQA&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('It Boy, The Rockstar Dance Practice #MOA_PRODUCTION', 2.39, 'https://www.youtube.com/watch?v=M2Wh95BjPHo&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - TOMORROW X TOGETHER #MOA_PRODUCTION', 8.23, 'https://www.youtube.com/watch?v=s7gXEQ4ggIU&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - SOOBIN #MOA_PRODUCTION', 3.05, 'https://www.youtube.com/watch?v=F0D8ETy6_GI&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - YEONJUN #MOA_PRODUCTION', 3.05, 'https://www.youtube.com/watch?v=pspHsAqp-GA&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - BEOMGYU #MOA_PRODUCTION', 3.05, 'https://www.youtube.com/watch?v=nbcVxSpZ-20&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - TAEHYUN #MOA_PRODUCTION', 3.05, 'https://www.youtube.com/watch?v=TcNHwOoABtU&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('T-MI - HUENINGKAI #MOA_PRODUCTION', 3.05, 'https://www.youtube.com/watch?v=Dw0UPXWKHY4&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Content Strategy Meetings #MOA_PRODUCTION', 37.22, 'https://www.youtube.com/watch?v=fEUSqLVOOhQ&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('See you next time, MOA #MOA_PRODUCTION', 3.41, 'https://www.youtube.com/watch?v=DPSXH2K7dwg&list=PLcZxoPUYVQX30hWu7M8uDNa9wRc_W9nIW&index=1&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. Fanchant ("link", "idCancion", "idUsuarioCrea", "fechaCrea")
+    VALUES ('https://txtfanchantguide.carrd.co/#blueo', 1, 1, NOW()),
+           ('https://txtfanchantguide.carrd.co/#crown', 2, 1, NOW()),
+           ('https://txtfanchantguide.carrd.co/#catdog', 4, 1, NOW()),
+           ('https://txtfanchantguide.carrd.co/#newrules', 6, 1, NOW()),
+           ('https://txtfanchantguide.carrd.co/#runaway', 7, 1, NOW()),
+           ('https://txtfanchantguide.carrd.co/#aod', 13, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#drama', 17, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#cysm', 18, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#puma', 21, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#bluehour', 27, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#wlts', 28, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#ikily', 36, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#magic', 37, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#norules', 40, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#loserlover', 43, 1, NOW()),
+           ('https://txtfanchantguidee.carrd.co/#moadiary', 44, 1, NOW()),
+           ('https://txtfanchantguide1.carrd.co/#openingsequence', 49, 1, NOW()),
+           ('https://txtfanchantguide1.carrd.co/#gbgb', 50, 1, NOW());
+
+INSERT INTO public. Integrante ("nombre", "profesion", "edad", "fechaN", "lugarN", "estatura", "peso", "signoZodiacal", "posicion", "entrenamiento", "idiomas", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Choi Soobin', ' Cantante, Rapero, Bailarín, Compositor y MC', 21, '05-12-2000', ' Ansan, Corea del Sur', 185, ' 67 kg', ' Sagitario', 'Líder, Vocalista, Rapero y Bailarín', ' 3 años', ' Coreano (Lengua Materna) e Inglés (Intermedio)', 1, NOW()),
+           ('Choi Yeonjun', ' Rapero, Cantante, Bailarín, Actor, Modelo, Diseñador, Compositor y MC', 22, '13-09-1999', ' Bundang-gu, Seongnam, Corea del Sur', 181.5, ' 62 kg', ' Virgo', ' Rapero, Vocalista y Bailarín.', ' 4 años', ' Coreano (lengua materna) e Inglés (fluido)', 1, NOW()),
+           ('Choi Beomgyu', ' Cantante, Bailarín, Rapero, Compositor y Productor', 21, '13-03-2001', ' Daegu, Corea del Sur', 180, ' 60 kg', ' Piscis', ' Vocalista, Rapero y Bailarín', ' 2 años', ' Coreano (Materno) e Inglés (Intermedio)', 1, NOW()),
+           ('Kang Taehyun', ' Cantante, Rapero, Bailarín, Compositor y DJ de radio', 20, '05-02-2002', ' Gangnam-gu, Seúl, Corea del Sur', 177, ' 57 kg', ' Acuario', ' Vocalista, Rapero y Bailarín', ' 3 años', ' Coreano (lengua materna) e Inglés (fluido)', 1, NOW()),
+           ('Huening Kai', ' Cantante, Rapero, Bailarín, Compositor, Productor, DJ de radio y Modelo', 19, '14-08-2002', ' Honolulu, Hawaii, EE.UU', 183, ' 67 kg', ' Leo', ' Vocalista, Rapero, Bailarín y Maknae', ' 2 años y 6 meses', ' Inglés (Materno), Coreano (Fluido) y Mandarín (Básico)', 1, NOW());
+
+INSERT INTO public. MC ("programa", "cadena", "periodo", "idIntegrante", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Music Bank', ' KBS', '23/07/2020 - 01/10/2021', 1, 1, NOW()),
+           ('Inkigayo', ' SBS', '03/04/2022 - Actualmente', 2, 1, NOW());
+
+INSERT INTO public. MoodDiary ("titulo", "duracion", "link", "idIntegrante", "idUsuarioCrea", "fechaCrea")
+    VALUES ('What are you doing when you dont sleep?', 36.05 , 'https://www.youtube.com/watch?v=C7G8RhhN2f0&list=PLcZxoPUYVQX3jYLc6AQ347BLLAJLgX_Gx&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           ('I keep wanting to do something else!', 32.36, 'https://www.youtube.com/watch?v=NIxWA7SwvwI&list=PLcZxoPUYVQX3jYLc6AQ347BLLAJLgX_Gx&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           ('What do you do when youre bored?', 38.01, 'https://www.youtube.com/watch?v=WAofcq8lJ-Y&list=PLcZxoPUYVQX3jYLc6AQ347BLLAJLgX_Gx&index=4', 3, 1, NOW()),
+           ('After a long day...', 34.58, 'https://www.youtube.com/watch?v=fpA5HwipbZ8&list=PLcZxoPUYVQX3jYLc6AQ347BLLAJLgX_Gx&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 2, 1, NOW()),
+           ('Have a warm day today', 36.50, 'https://www.youtube.com/watch?v=5TJatHSqJ5E&list=PLcZxoPUYVQX3jYLc6AQ347BLLAJLgX_Gx&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW());
+
+INSERT INTO public. MV ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('CROWN Official MV', 4.00, 'https://www.youtube.com/watch?v=W3iSnJ663II&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=31&ab_channel=HYBELABELS', 1, NOW()),
+           ('CROWN Official MV (Choreography Version)', 4.00, 'https://www.youtube.com/watch?v=-6xhgynDlYY&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=30&ab_channel=HYBELABELS', 1, NOW()),
+           ('Blue Orangeade Lyric Video', 3.15, 'https://www.youtube.com/watch?v=LTz8NjNQp-s&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=29&ab_channel=HYBELABELS', 1, NOW()),
+           ('Cat & Dog Official MV', 3.41, 'https://www.youtube.com/watch?v=NaKrke1EL1A&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=28&ab_channel=HYBELABELS', 1, NOW()),
+           ('Nap of a star Official MV', 5.33, 'https://www.youtube.com/watch?v=XkDA02FHHik&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=26&ab_channel=HYBELABELS', 1, NOW()),
+           ('Run Away Official MV', 5.17, 'https://www.youtube.com/watch?v=6yWPfUz0z94&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=24&ab_channel=HYBELABELS', 1, NOW()),
+           ('Magic Island Official MV', 13.35, 'https://www.youtube.com/watch?v=KskEx8K-l2Q&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=23&ab_channel=HYBELABELS', 1, NOW()),
+           ('Angel Or Devil Official MV', 4.01, 'https://www.youtube.com/watch?v=cfm97EKin4c&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=22&ab_channel=HYBELABELS', 1, NOW()),
+           ('Run Away [Japanese Ver.] Official MV', 3.40, 'https://www.youtube.com/watch?v=2u8ExBR-RbQ&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=21&ab_channel=HYBELABELS', 1, NOW()),
+           ('Cant You See Me? Official MV', 3.50, 'https://www.youtube.com/watch?v=cMFHUTJ13Ys&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=19&ab_channel=HYBELABELS', 1, NOW()),
+           ('PUMA Official MV', 3.37, 'https://www.youtube.com/watch?v=ImTgS5OXgbU&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=18&ab_channel=HYBELABELS', 1, NOW()),
+           ('Eternally Official MV', 19.32, 'https://www.youtube.com/watch?v=mxlloUcfUy0&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=17&ab_channel=HYBELABELS', 1, NOW()),
+           ('Drama [Japanese Ver.] Official MV', 4.08, 'https://www.youtube.com/watch?v=UUOGVgComrU&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=16&ab_channel=HYBELABELS', 1, NOW()),
+           ('Blue Hour Official MV', 5.04, 'https://www.youtube.com/watch?v=Vd9QkWsd5p4&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=15&ab_channel=HYBELABELS', 1, NOW()),
+           ('Blue Hour Official MV (Choreography ver.)', 4.32, 'https://www.youtube.com/watch?v=vyEGqtQ6MEA&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=14&ab_channel=HYBELABELS', 1, NOW()),
+           ('We Lost The Summer Official MV', 3.55, 'https://www.youtube.com/watch?v=kwy0nR1_SBQ&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=13&ab_channel=HYBELABELS', 1, NOW()),
+           ('Blue Hour [Japanese Ver.] Official MV', 4.53, 'https://www.youtube.com/watch?v=RuGE7rhuT14&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=12&ab_channel=HYBELABELS', 1, NOW()),
+           ('Way Home Official MV (Eye Contact ver.)', 3.17, 'https://www.youtube.com/watch?v=n_f-eSCgktk&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=11&ab_channel=HYBELABELS', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Official MV', 4.36, 'https://www.youtube.com/watch?v=d5bbqKYu51w&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=9&ab_channel=HYBELABELS', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Official MV (Choreography ver.)', 7.05, 'https://www.youtube.com/watch?v=fJF_eZzTka8&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=8&ab_channel=HYBELABELS', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Official MV (Choreo Full Shot ver.)', 3.40, 'https://www.youtube.com/watch?v=sBl505nkjMs&ab_channel=HYBELABELS', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori Official MV (Choreo Close-up ver.)', 3.40, 'https://www.youtube.com/watch?v=MOKWoY8qy4E&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=7&ab_channel=HYBELABELS', 1, NOW()),
+           ('Magic Official MV', 3.36, 'https://www.youtube.com/watch?v=FQRnJvbLTAo&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=6&ab_channel=HYBELABELS', 1, NOW()),
+           ('LO$ER=LO♡ER Official MV', 3.30, 'https://www.youtube.com/watch?v=JzODRUBBXpc&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=5&ab_channel=HYBELABELS', 1, NOW()),
+           ('Frost', 4.02, 'https://www.youtube.com/watch?v=X3lA4EeeXtM&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=3&ab_channel=HYBELABELS', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Ikuta Lilas [Japanese Ver.] Official MV', 4.14, 'https://www.youtube.com/watch?v=EieUsaKgbsU&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&index=2&ab_channel=HYBELABELS', 1, NOW()),
+           ('Good Boy Gone Bad Official MV', 3.36, 'https://www.youtube.com/watch?v=Os_6c5j6YiQ&list=PLQwaMZCS6vkjitLmlboZrY8Y4R_IODEu3&ab_channel=HYBELABELS', 1, NOW());
+
+INSERT INTO public. OneDream ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Reality Ep.01 - Part.1', 19.37, 'https://www.youtube.com/watch?v=GeKTgDqTyts&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=27&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.01 - Part.2', 15.52, 'https://www.youtube.com/watch?v=Hx3Lt8RfMHY&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=26&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.01 - Part.3', 14.08, 'https://www.youtube.com/watch?v=gy-9RJUxpMU&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=25&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.02 - Part.1', 19.58, 'https://www.youtube.com/watch?v=yIy_76-vviM&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=22&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.02 - Part.2', 18.51, 'https://www.youtube.com/watch?v=18Zr29xG468&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=21&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.02 - Part.3', 14.00, 'https://www.youtube.com/watch?v=FKTkc_N4I-0&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=20&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.03 - Part.1', 15.18, 'https://www.youtube.com/watch?v=lRFdQ9i7drU&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=18&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.03 - Part.2', 15.01, 'https://www.youtube.com/watch?v=iuAgqzMOSdo&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=17', 1, NOW()),
+           ('Reality Ep.03 - Part.3', 28.16, 'https://www.youtube.com/watch?v=ZUTN-3DCXZU&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=18', 1, NOW()),
+           ('Reality Ep.04 - Part.1', 20.31, 'https://www.youtube.com/watch?v=1VWpDH3rQRQ&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=15&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.04 - Part.2', 12.20, 'https://www.youtube.com/watch?v=ii5_I6c-6pQ&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=13&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.04 - Part.3', 19.18, 'https://www.youtube.com/watch?v=LaUKxZ97iHQ&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=14&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.05 - Part.1', 22.03, 'https://www.youtube.com/watch?v=Khl0ZfGioMI&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=12&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.05 - Part.2', 12.58, 'https://www.youtube.com/watch?v=CXi1a4RhnkM&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=11&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.05 - Part.3', 23.42, 'https://www.youtube.com/watch?v=CHRTm1tuYzA&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=10&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.06 - Part.1', 20.10, 'https://www.youtube.com/watch?v=n_-uB7LNSL4&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=9&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.06 - Part.2', 15.05, 'https://www.youtube.com/watch?v=a5A6wNhGAuI&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=8&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.06 - Part.3', 17.53, 'https://www.youtube.com/watch?v=pY7PKaI6gT0&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=7&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.07 - Part.1', 20.26, 'https://www.youtube.com/watch?v=Ae-IwhEZKjI&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=6&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.07 - Part.2', 21.46, 'https://www.youtube.com/watch?v=o3KrJ_GD9dc&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=5&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.07 - Part.3', 18.29, 'https://www.youtube.com/watch?v=rn2SwUI7eY4&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=4&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.08 - Part.1', 26.50, 'https://www.youtube.com/watch?v=qeoyKHk0teg&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=1&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.08 - Part.2', 16.33, 'https://www.youtube.com/watch?v=GwpVfx7TFCY&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=2&ab_channel=MnetK-POP', 1, NOW()),
+           ('Reality Ep.08 - Part.3', 15.28, 'https://www.youtube.com/watch?v=HggfCOfBbUo&list=PLcZxoPUYVQX10oqupDE8cVYKFmZIHY-eT&index=3&ab_channel=MnetK-POP', 1, NOW());
+
+INSERT INTO public. Opening ("anime", "idCancion", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Black Clover', 24, 1, NOW()),
+           ('World Trigger', 32, 1, NOW());
+
+INSERT INTO public. Ost ("kDrama", "idCancion", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Live On', 54, 1, NOW()),
+           ('Doom at Your Service', 55, 1, NOW()),
+           ('Rasen no Meikyu', 48, 1, NOW()),
+           ('Armored Saurus', 56, 1, NOW());
+
+INSERT INTO public. Performance ("titulo", "evento", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Cat & Dog (4K UHD)', ' Studio Choom', 3.18, 'https://www.youtube.com/watch?v=w9DgWjsrzbg&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=1&ab_channel=M2', 1, NOW()),
+           ('New Rules (4K UHD)', ' Studio Choom', 2.59, 'https://www.youtube.com/watch?v=OxtraGjrKz0&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=3&ab_channel=STUDIOCHOOM%5B%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4%EC%B6%A4%5D', 1, NOW()),
+           ('Cant You See Me? (4K)', ' Studio Choom', 3.33, 'https://www.youtube.com/watch?v=O9BqpP7uYlU&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=6&ab_channel=STUDIOCHOOM%5B%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4%EC%B6%A4%5D', 1, NOW()),
+           ('PUMA (4K)', ' Studio Choom', 3.32, 'https://www.youtube.com/watch?v=DI-p_p4jjlk&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=8&ab_channel=STUDIOCHOOM%5B%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4%EC%B6%A4%5D', 1, NOW()),
+           ('Blue Hour (Dance Break Ver.) (4K)', ' Studio Choom', 4.29, 'https://www.youtube.com/watch?v=DMkwW-TUR8U&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=11&ab_channel=STUDIOCHOOM%5B%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4%EC%B6%A4%5D', 1, NOW()),
+           ('Magic (4K)', ' Studio Choom', 2.46, 'https://www.youtube.com/watch?v=bakjBoYiaks&list=PLI41iQU0lqhYHH-2KkVmNaRjyT3g_jN4V&index=14&ab_channel=STUDIOCHOOM%5B%EC%8A%A4%ED%8A%9C%EB%94%94%EC%98%A4%EC%B6%A4%5D', 1, NOW()),
+           ('[2019 MAMA] TOMORROW X TOGETHER_INTRO + Run Away + OUTRO', ' MAMA', 5.41, 'https://www.youtube.com/watch?v=rgEls57fF8U&list=PLI41iQU0lqhbx22iq5rJdNp0vzyA4Fnlp&index=1&ab_channel=MnetK-POP', 1, NOW()),
+           ('[2020 MAMA] TOMORROW X TOGETHER_Short Hair + She Was Pretty + Dynamite | Mnet 201206', ' MAMA', 4.05, 'https://www.youtube.com/watch?v=SGiWi8i6yFE&list=PLI41iQU0lqhbx22iq5rJdNp0vzyA4Fnlp&index=3&ab_channel=MnetK-POP', 1, NOW()),
+           ('[2020 MAMA] TOMORROW X TOGETHER_Blue Hour (Dance Break ver.) | Mnet 201206', ' MAMA', 4.49, 'https://www.youtube.com/watch?v=D2A_xkxy1AY&list=PLI41iQU0lqhbx22iq5rJdNp0vzyA4Fnlp&index=4&ab_channel=MnetK-POP', 1, NOW()),
+           ('[2021 MAMA] TOMORROW X TOGETHER - LO$ER=LO♡ER | Mnet 211211', ' MAMA', 2.29, 'https://www.youtube.com/watch?v=hkGM5Qt7uf4&list=PLI41iQU0lqhbx22iq5rJdNp0vzyA4Fnlp&index=6&ab_channel=MnetK-POP', 1, NOW()),
+           ('[2021 MAMA] TOMORROW X TOGETHER - Frost | Mnet 211211', ' MAMA', 4.28, 'https://www.youtube.com/watch?v=Sm56PnFNmqY&list=PLI41iQU0lqhbx22iq5rJdNp0vzyA4Fnlp&index=7&ab_channel=MnetK-POP', 1, NOW()),
+           ('[MMA 2019] TOMORROW X TOGETHER | Full Live Performance', ' MMA', 15.51, 'https://www.youtube.com/watch?v=UlSmk_u2aZ0&list=PLI41iQU0lqhaWVbluaZIxmGbU93Ib68td&index=1&ab_channel=1theK%28%EC%9B%90%EB%8D%94%EC%BC%80%EC%9D%B4%29', 1, NOW()),
+           ('TXT  PUMA + Blue Hour (Dance Break ver.) @ 2020 MMA', ' MMA', 12.14, 'https://www.youtube.com/watch?v=19I0AaGJuu0&list=PLI41iQU0lqhaWVbluaZIxmGbU93Ib68td&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TXT 0X1=LOVESONG (I Know I Love You) feat. Seori (Dance Break ver.) + LO$ER=LO♡ER @ 2021 MMA', ' MMA', 9.01, 'https://www.youtube.com/watch?v=24iIKpnmILk&list=PLI41iQU0lqhaWVbluaZIxmGbU93Ib68td&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('[34th Golden Disc Awards] TXT New Rules + Runaway', 'GDA', 7.46, 'https://www.youtube.com/watch?v=OqZuchut5x4&list=PLI41iQU0lqhZf__FaxHwE1TLudpajHCCg&index=1&ab_channel=GoldenDiscAwards', 1, NOW()),
+           ('[35th Golden Disc Awards] TOMORROW X TOGETHER Cant You See Me + PUMA｜JTBC 210110', 'GDA', 7.10, 'https://www.youtube.com/watch?v=HJrrpl0SkRg&list=PLI41iQU0lqhZf__FaxHwE1TLudpajHCCg&index=2&ab_channel=GoldenDiscAwards', 1, NOW()),
+           ('[36th Golden Disc Awards] TOMORROW X TOGETHER - It Boy, The Rockstar', 'GDA', 2.35, 'https://www.youtube.com/watch?v=mABGhadQoUs&list=PLI41iQU0lqhZf__FaxHwE1TLudpajHCCg&index=3&ab_channel=GoldenDiscAwards', 1, NOW()),
+           ('[36th Golden Disc Awards] TOMORROW X TOGETHER No Rules+Anti-Romantic ｜JTBC 220108', 'GDA', 8.56, 'https://www.youtube.com/watch?v=QEeyVki7tUU&list=PLI41iQU0lqhZf__FaxHwE1TLudpajHCCg&index=4&ab_channel=GoldenDiscAwards', 1, NOW());
+
+INSERT INTO public. Playground ("episodio", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES (1, 45.05, 'https://www.youtube.com/watch?v=00MBzKHRs2Q&list=PL_Cqw69_m_ywOmrYe79Ancn6w9tVJ2Zex&index=1&ab_channel=HYBELABELS', 1, NOW()),
+           (2, 59.23, 'https://www.youtube.com/watch?v=tw3DuI6CAgY&list=PL_Cqw69_m_ywOmrYe79Ancn6w9tVJ2Zex&index=2&ab_channel=HYBELABELS', 1, NOW());
+
+INSERT INTO public. Premio ("nombre", "tipo", "año", "evento", "idUsuarioCrea", "fechaCrea")
+    VALUES ('CROWN', ' Music Show', 2019, ' SBS MTV The Show', 1, NOW()),
+           ('CROWN', ' Music Show', 2019, ' Mnet M! Countdown', 1, NOW()),
+           ('CROWN', ' Music Show', 2019, ' MBNC Show Champion', 1, NOW()),
+           ('Rookie Male Idol', ' Premiacion', 2019, ' 1s7th Brand Of The Year Awards', 1, NOW()),
+           ('The Male New Artist Award', ' Premiacion', 2019, ' M2 X Genie Music Awards', 1, NOW()),
+           ('Rookie Award', ' Premiacion', 2019, ' Soribada Best K-Music Awards', 1, NOW()),
+           ('Best International Debut Music Video (por CROWN)', ' Premiacion', 2019, ' BreakTudo Awards', 1, NOW()),
+           ('Global Rookie Top 5', ' Premiacion', 2019, ' V Live Awards V HEARTBEAT', 1, NOW()),
+           ('Run Away', ' Music Show', 2019, ' SBS MTV The Show', 1, NOW()),
+           ('Rookie of the Year (Music)', ' Music Show', 2019, ' Asia Artist Awards', 1, NOW()),
+           ('New Artist of the Year (Male', ' Premiacion', 2019, ' Melon Music Awards', 1, NOW()),
+           ('Worldwide Fans Choice Top 10', ' Premiacion', 2019, ' Mnet Asian Music Awards', 1, NOW()),
+           ('Best New Male Artist', ' Premiacion', 2019, ' Mnet Asian Music Awards', 1, NOW()),
+           ('Best New Artist', ' Premiacion', 2020, ' Golden Disc Awards', 1, NOW()),
+           ('New Artist of the Year (Album)', ' Premiacion', 2020, ' 9th Gaon Chart Music Awards', 1, NOW()),
+           ('New Artist Award', ' Premiacion', 2020, ' Seoul Music Awards', 1, NOW()),
+           ('Next Leader Award', ' Premiacion', 2020, ' 2019 The Fact Music Awards', 1, NOW()),
+           ('Cant You See Me?', ' Music Show', 2020, ' SBS MTV The Show', 1, NOW()),
+           ('Cant You See Me?', ' Music Show', 2020, ' MBC Show Champion', 1, NOW()),
+           ('Special Hallyu Awards - Artist Awards', ' Premiacion', 2020, ' Soribada Best K-Music Awards', 1, NOW()),
+           ('2020s Song of the Summer! (Cant You See Me?)', ' Premiacion', 2020, ' Radio Disney', 1, NOW()),
+           ('Blue Hour', ' Music Show', 2020, ' SBS MTV The Show', 1, NOW()),
+           ('Worldwide Fans Choice Award Top 10', ' Premiacion', 2020, ' 22nd Mnet Asian Music Awards', 1, NOW()),
+           ('Favorite Dance Perfomance - Group (Cant You See Me?)', ' Premiacion', 2020, ' 22nd Mnet Asian Music Awards', 1, NOW()),
+           ('Best Performer', ' Premiacion', 2020, ' The Fact Music Awards', 1, NOW()),
+           ('Bonsang (Album)', ' Premiacion', 2021, ' 35th Golden Disc Awards', 1, NOW()),
+           ('Bonsang', ' Premiacion', 2021, ' 30th Seoul Music Awards', 1, NOW()),
+           ('New Artist Of The Year (Asia)', ' Premiacion', 2021, ' Japan Gold Disc Awards', 1, NOW()),
+           ('Best 3 New Artist (Asia)', ' Premiacion', 2021, ' Japan Gold Disc Awards', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori', ' Music Show', 2021, ' SBS MTV The Show', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori', ' Music Show', 2021, ' MBC Show Champion', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori', ' Music Show', 2021, ' Mnet M! Countdown', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori', ' Music Show', 2021, ' KBS Music Bank', 1, NOW()),
+           ('Rising Star K-Pop Idol (Male)', ' Premiacion', 2021, ' Brand of the Year Awards', 1, NOW()),
+           ('LO$ER=LO♡ER', ' Music Show', 2021, ' SBS MTV The Show', 1, NOW()),
+           ('LO$ER=LO♡ER', ' Music Show', 2021, ' MBC Show Champion', 1, NOW()),
+           ('Artist of the Year (Bonsang)', ' Premiacion', 2021, ' The Fact Music Awards', 1, NOW()),
+           ('Pop Icon Award', ' Premiacion', 2021, ' GQ MEN OF THE YEAR 2021', 1, NOW()),
+           ('Music Video of the Year', ' Premiacion', 2021, ' 13th Melon Music Awards', 1, NOW()),
+           ('Worldwide Fans Choice Top 10', ' Premiacion', 2021, ' 23nd Mnet Asian Music Awards', 1, NOW()),
+           ('Digital Content Award', ' Premiacion', 2021, ' KBS Entertainment Awards', 1, NOW()),
+           ('Album (Bonsang)', ' Premiacion', 2022, ' 36th Golden Disc Awards', 1, NOW()),
+           ('Best Rising Star Idol (Male)', ' Premiacion', 2022, ' Korea First Brand Awards', 1, NOW()),
+           ('Hero Of The Year', ' Premiacion', 2022, ' BandLab NME Awards', 1, NOW()),
+           ('Best 3 Albums (Asia) (por "Chaotic Wonderland")', ' Premiacion', 2022, ' 36th Japan Gold Disc Awards', 1, NOW()),
+           ('Good Boy Gone Bad', ' Music Show', 2022, ' KBS Music Bank', 1, NOW());
+
+INSERT INTO public. RadioShow ("nombre", "fecha", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Idol Radio', '02-04-2019', 1, NOW()),
+           ('Idol Radio', '08-11-2019', 1, NOW()),
+           ('NOW Radio 5:55 pm', '18-05-2020', 1, NOW()),
+           ('CoolFM Kang Hannas Volume Up', '27-10-2020', 1, NOW()),
+           ('Power FM Cultwo Show', '08-11-2020', 1, NOW()),
+           ('Kim Shin Youngs Noon Song of Hope', '19-11-2020', 1, NOW()),
+           ('CoolFM DAY6s Kiss The Radio', 29-11-2020', 1, NOW()),
+           ('Radio Listening', '07-02-2021', 1, NOW()),
+           ('CoolFM Kang Hannas Volume Up', '19-02-2021', 1, NOW()),
+           ('CoolFM Kang Hannas Volume Up', '09-06-2021', 1, NOW()),
+           ('CoolFM DAY6s Kiss The Radio', '20-28-2021', 1, NOW());
+
+INSERT INTO public. Revista ("nombre", "año", "idUsuarioCrea", "fechaCrea")
+    VALUES ('W Korea', 2019, 1, NOW()),
+           ('DAZED Korea', 2020, 1, NOW()),
+           ('anan', 2020, 1, NOW()),
+           ('star1', 2020, 1, NOW()),
+           ('S Cawaii', 2020, 1, NOW()),
+           ('PopTeen', 2020, 1, NOW()),
+           ('non-no', 2020, 1, NOW()),
+           ('CUT', 2020, 1, NOW()),
+           ('Teen Vogue', 2020, 1, NOW()),
+           ('Myojo', 2020, 1, NOW()),
+           ('JJ', 2020, 1, NOW()),
+           ('S Cawaii', 2020, 1, NOW()),
+           ('Elite DAILY', 2021, 1, NOW()),
+           ('Vogue Korea', 2021, 1, NOW()),
+           ('Rolling Stone India', 2021, 1, NOW()),
+           ('DAZED Korea', 2021, 1, NOW()),
+           ('tmrw', 2021, 1, NOW()),
+           ('1st LOOK', 2021, 1, NOW()),
+           ('PAPER', 2021, 1, NOW()),
+           ('Numero TOKYO', 2021, 1, NOW()),
+           ('EUPHORIA', 2021, 1, NOW()),
+           ('aR', 2021, 1, NOW()),
+           ('ELLE Korea', 2022, 1, NOW());
+
+INSERT INTO public. Show ("titulo", "duracion", "link", "fecha", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Debut Celebration Show', 48.39, 'https://www.youtube.com/watch?v=Ehin3aFK1Tw&ab_channel=TOMORROWXTOGETHEROFFICIAL', 05-03-2019, 1, NOW()),
+           ('Magic Comeback Show ', 48.55, 'https://www.youtube.com/watch?v=XUp3rJMPQqU&ab_channel=M2', 28-10-2019, 1, NOW()),
+           ('Eternity Comeback Show', 59.48, 'https://www.youtube.com/watch?v=Fsrmz1GKY6E&ab_channel=M2', 18-05-2020, 1, NOW()),
+           ('Blue Hour Comeback Show', 58.42, 'https://www.youtube.com/watch?v=rywI0H1cqjA&ab_channel=M2', 26-10-2020, 1, NOW()),
+           ('Freeze Comeback Show',59.46, 'https://www.youtube.com/watch?v=RhyX6ejWtVE&ab_channel=M2', 31-05-2021, 1, NOW()),
+           ('Thursdays Child Comeback Show', 59.53, 'https://www.youtube.com/watch?v=5aGlJmrBNuw&ab_channel=M2', 09-05-2022, 1, NOW());
+
+INSERT INTO public. TalkxToday ("titulo", "temporada", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('TALK X TODAY : ZERO EP.1', 0, 19.21, 'https://www.youtube.com/watch?v=-kAOjiWo3tQ&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=27&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : ZERO EP.2', 0, 21.06, 'https://www.youtube.com/watch?v=bEWB7Et69cc&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=26&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : ZERO EP.3', 0, 20.49, 'https://www.youtube.com/watch?v=WkfwNwq5b4E&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY Teaser', 1, 0.53, 'https://www.youtube.com/watch?v=DbuJsOGUAMY&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY EP.1 (+ENG)', 1, 23.20, 'https://www.youtube.com/watch?v=2Y7dGuu0BBY&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=48&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY EP.2 (+ENG)', 1, 22.29, 'https://www.youtube.com/watch?v=CBOPdSvA7p4&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=47&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY EP.3 (+ENG)', 1, 23.07, 'https://www.youtube.com/watch?v=Nr_iUBzoExA&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=46&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY EP.4 (+ENG)', 1, 25.13, 'https://www.youtube.com/watch?v=lyfc5GPfWaA&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=45&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY EP.5 (+ENG)', 1, 27.17, 'https://www.youtube.com/watch?v=05MHSKKHjCo&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=44&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY Epilogue (+ENG)', 1, 17.49, 'https://www.youtube.com/watch?v=LL0AWvfeOuM&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=43&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 Teaser', 2, 0.57, 'https://www.youtube.com/watch?v=_q4_hho0g1Y&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=42&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.1 (+ENG SUBS)', 2, 25.24, 'https://www.youtube.com/watch?v=xVcRf1wUksg&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=40&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.2 (+ENG SUBS)', 2, 24.11, 'https://www.youtube.com/watch?v=9qw-xgWHUV8&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=38&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.3 (+ENG SUBS)', 2, 24.09, 'https://www.youtube.com/watch?v=qXL_qZIPISM&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=36&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.4 (+ENG SUBS)', 2, 24.43, 'https://www.youtube.com/watch?v=PsNDLmamZEI&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=35&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.5 (+ENG SUBS)', 2, 24.29, 'https://www.youtube.com/watch?v=l8IPog0fi0s&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=32&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.6 (+ENG SUBS)', 2, 25.54, 'https://www.youtube.com/watch?v=srMxuIabuw8&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=30&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season2 EP.7 (+ENG SUBS)', 2, 26.51, 'https://www.youtube.com/watch?v=WhAPJ2P9B48&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=28&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 Teaser', 1, 0.59, 'https://www.youtube.com/watch?v=yr00VDRk4vs&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.1', 3, 22.52, 'https://www.youtube.com/watch?v=FHJLfM8hBBI&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.2', 3, 22.38, 'https://www.youtube.com/watch?v=MO_94aesoPI&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.3', 3, 22.52, 'https://www.youtube.com/watch?v=ZCpEi2lvovc&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=21&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.4', 3, 22.47, 'https://www.youtube.com/watch?v=tGGKSSnOquQ&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.5', 3, 22.32, 'https://www.youtube.com/watch?v=mJy0yOhF2lI&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.6', 3, 23.11, 'https://www.youtube.com/watch?v=phBrDvwf20g&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 EP.7', 3, 22.45, 'https://www.youtube.com/watch?v=393JAGrKnN4&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season3 Epilogue', 3, 19.08, 'https://www.youtube.com/watch?v=eemBTZKOiPo&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 Teaser', 4, 1.00, 'https://www.youtube.com/watch?v=3GBWKNC9KIk&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.1', 4, 22.12, 'https://www.youtube.com/watch?v=Om-Ss0wy45Q&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.2', 4, 22.57, 'https://www.youtube.com/watch?v=D5jgQSxbAEE&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.3', 4, 20.56, 'https://www.youtube.com/watch?v=D6373qajsGg&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.4', 4, 21.46, 'https://www.youtube.com/watch?v=oiiRRkzqrbo&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.5', 4, 20.56, 'https://www.youtube.com/watch?v=kHB6JubSwTM&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.6', 4, 21.55, 'https://www.youtube.com/watch?v=nHTKzZdoZl0&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.7', 4, 20.18, 'https://www.youtube.com/watch?v=C0VGnonE720&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.8', 4, 26.05, 'https://www.youtube.com/watch?v=QK5LCAVRC50&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.9', 4, 22.40, 'https://www.youtube.com/watch?v=QQ5sK3e_PTc&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TALK X TODAY : Season4 EP.10', 4, 20.04, 'https://www.youtube.com/watch?v=rhQOnUBuj6I&list=PLcZxoPUYVQX1dffyKtyNYpWWl40COUDz2&index=1&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. TheStarSeekers ("app", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Webtoon', 'https://www.webtoons.com/en/fantasy/the-star-seekers/list?title_no=3786', 1, NOW()),
+           ('Wattpad', 'https://www.wattpad.com/story/294966013-the-star-seekers?utm_source=android&utm_medium=link&utm_content=story_info&wp_page=story_details_button&wp_uname=j_mxnho&wp_originator=KqQ+9ixGtNri9R4KODCEOtbvwq5ybB6zIqzf3Cbp+sPCV+uc3oxIzw3WhCupUVU0Dcy7j1tqMZ8vxYw9RVwLgCDyeEQ6rEAJT1SiHyHnZ2o8vFX2Xyt5dkI2l8EfRWRj', 1, NOW());
+
+INSERT INTO public. ToDo ("episodio", "titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES (1, null, 31.11, 'https://www.youtube.com/watch?v=qfYX4TbobxA&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=63&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (2, null, 34.22, 'https://www.youtube.com/watch?v=jLkOJi_VxHE&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=62&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (3, null, 33.53, 'https://www.youtube.com/watch?v=2BAZVPF5bbU&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=61&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (4, null, 36.19, 'https://www.youtube.com/watch?v=dCOl43TbIso&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=60&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (5, null, 36.04, 'https://www.youtube.com/watch?v=KsZWH1pT9aw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=59&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (6, null, 35.40, 'https://www.youtube.com/watch?v=iQ_oUlzPo2U&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=58&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (7, null, 30.12, 'https://www.youtube.com/watch?v=meba3Xqic2w&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=57&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (8, null, 30.59, 'https://www.youtube.com/watch?v=0EI5p5y2vLM&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=56&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (9, null, 35.11, 'https://www.youtube.com/watch?v=kUh5c6Ez5hM&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=55&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (10, null, 35.00, 'https://www.youtube.com/watch?v=fRhsuDo03y8&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=54&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (11, null, 34.18, 'https://www.youtube.com/watch?v=BHlQCvXDB48&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=53&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (12, null, 35.35, 'https://www.youtube.com/watch?v=8CkJArpv5Cc&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=52&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (13, null, 29.37, 'https://www.youtube.com/watch?v=aBsPM9uJnUc&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=51&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (14, null, 33.15, 'https://www.youtube.com/watch?v=L21GbpEnLm0&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=50&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (15, null, 27.57, 'https://www.youtube.com/watch?v=A8yyBtHnNnk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=49&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (16, null, 32.47, 'https://www.youtube.com/watch?v=7J1wO2Q9ZUo&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=48&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (17, null, 34.34, 'https://www.youtube.com/watch?v=AVyQSItYOXY&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=47&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (18, null, 29.34, 'https://www.youtube.com/watch?v=n792HHL8Ix4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=46&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (19, null, 30.27, 'https://www.youtube.com/watch?v=gi8R5hxMC40&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=45&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (20, null, 34.40, 'https://www.youtube.com/watch?v=NRdhSIfSdp4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=44&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (21, null, 34.06, 'https://www.youtube.com/watch?v=CU0uRf66E5E&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=43&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (22, null, 34.35, 'https://www.youtube.com/watch?v=qd8Iq1ESows&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=42&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (23, null, 35.02, 'https://www.youtube.com/watch?v=r5UgfQXvssI&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=41&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (24, null, 34.19, 'https://www.youtube.com/watch?v=rmUFquR4Rs0&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=40&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (25, null, 31.59, 'https://www.youtube.com/watch?v=eTM1G87omxg&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=39&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (26, null, 37.19, 'https://www.youtube.com/watch?v=k1WJlhr2hpw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=38&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (27, null, 36.32, 'https://www.youtube.com/watch?v=W_Sytw833nw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=37&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (28, null, 32.00, 'https://www.youtube.com/watch?v=eOBLOpDPFGA&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=36&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (29, null, 37.15, 'https://www.youtube.com/watch?v=OCm94rP0o_Y&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=35&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (30, null, 38.51, 'https://www.youtube.com/watch?v=7OAz1nvHrHQ&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=34&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (31, null, 39.58, 'https://www.youtube.com/watch?v=SbiiiYaNzZU&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=33&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (32, null, 29.22, 'https://www.youtube.com/watch?v=HKcFUBrdvkI&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=33&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (33, null, 26.50, 'https://www.youtube.com/watch?v=Hl5CEzpYpw4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=31&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (34, null, 27.21, 'https://www.youtube.com/watch?v=Ct8LOERMHLk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=31&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (35, null, 27.49, 'https://www.youtube.com/watch?v=pOF_TEy0-kw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=29&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (36, null, 30.15, 'https://www.youtube.com/watch?v=xn38d2LXJJ0&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=28&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (37, null, 31.23, 'https://www.youtube.com/watch?v=9HjTU9BdLkU&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=27&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (38, null, 34.02, 'https://www.youtube.com/watch?v=RfVzKdyPlOo&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=26ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (39, null, 25.35, 'https://www.youtube.com/watch?v=r0O3ITIcDHw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (40, null, 27.44, 'https://www.youtube.com/watch?v=L01mYUhPsFU&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (41, null, 24.27, 'https://www.youtube.com/watch?v=XHTtHiRdJvQ&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (42, null, 25.59, 'https://www.youtube.com/watch?v=MyCSknu7zcs&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (43, null, 30.30, 'https://www.youtube.com/watch?v=oxnTfTd98gk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=21&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (44, null, 26.51, 'https://www.youtube.com/watch?v=OwJl-qLPb7g&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (45, null, 24.46, 'https://www.youtube.com/watch?v=N9kTPMaso6g&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (46, null, 27.41, 'https://www.youtube.com/watch?v=ptUFYzzFLfs&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (47, null, 25.05, 'https://www.youtube.com/watch?v=b-sdC_3tMs8&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (48, null, 31.02, 'https://www.youtube.com/watch?v=f8XLgx-zyQQ&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (49, null, 28.09, 'https://www.youtube.com/watch?v=k5b0gsgYuUY&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=15&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (50, null, 24.59, 'https://www.youtube.com/watch?v=l8NTjBYooao&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=14&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (51, null, 28.49, 'https://www.youtube.com/watch?v=i8OsGMRpiKU&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (52, null, 30.29, 'https://www.youtube.com/watch?v=UfIAfx6z4qg&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (53, null, 28.54, 'https://www.youtube.com/watch?v=eINH-88Z_IA&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (54, null, 32.42, 'https://www.youtube.com/watch?v=p5IVv35dXl4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (55, null, 25.19, 'https://www.youtube.com/watch?v=niLw6LkQkjk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (56, null, 26.43, 'https://www.youtube.com/watch?v=zbMFHPYDNEw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (null, 'Teaser', 0.45, 'https://www.youtube.com/watch?v=JoLWYu24Lk0&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (57, 'A Fake Staycation Part 1', 27.18, 'https://www.youtube.com/watch?v=qLobOqnKKww&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (58, 'A Fake Staycation Part 2', 28.58, 'https://www.youtube.com/watch?v=oB34UNBWS-4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (59, 'Police Playbook Part 1', 25.14, 'https://www.youtube.com/watch?v=r_Q11ooA0d0&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (60, 'Police Playbook Part 2', 28.43, 'https://www.youtube.com/watch?v=HvrIB5MnhZw&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (61, 'Learn About Your Members Part 1', 41.39, 'https://www.youtube.com/watch?v=Lzywl1M7Cxs&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (62, 'Learn About Your Members Part 2', 40.31, 'https://www.youtube.com/watch?v=4UIr7zOpSOc&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (63, 'Happy Holiday Party Part 1', 30.11, 'https://www.youtube.com/watch?v=0mC4nsiTFKc&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=64&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (64, 'Happy Holiday Party Part 2', 30.42, 'https://www.youtube.com/watch?v=2hdokKsWZwc&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=65&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (65, '2nd Birthday Party Part 1', 32.11, 'https://www.youtube.com/watch?v=MmL8T_d33ko&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=66&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (66, '2nd Birthday Party Part 2', 31.00, 'https://www.youtube.com/watch?v=ZgUEBwNQRPE&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=67&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (67, 'Action Painting', 26.51, 'https://www.youtube.com/watch?v=Dh_eb3zaaWE&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=68&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (68, 'From STAR to BARISTA...★ Part 1', 29.01, 'https://www.youtube.com/watch?v=WtYgS4OWATQ&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=69&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (69, 'From STAR to BARISTA...★ Part 2', 29.31, 'https://www.youtube.com/watch?v=wcVNcUUQGvo&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=70&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (70, 'Bye guys, Im leaving first! Part 1', 31.14, 'https://www.youtube.com/watch?v=qGRKgX_GxwM&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=71&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (71, 'Bye guys, Im leaving first! Part 2', 30.10, 'https://www.youtube.com/watch?v=zeidRTe4jVs&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=72&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (72, 'Worlds Best Spring Fairy Contest Part 1', 38.22, 'https://www.youtube.com/watch?v=arWMQwMdDFo&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=73&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (73, 'Worlds Best Spring Fairy Contest Part 2', 36.03, 'https://www.youtube.com/watch?v=lDmLcT5IM2M&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=74&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (74, 'The Biggest Winner Part 1', 34.35, 'https://www.youtube.com/watch?v=XqozTOweub4&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=75&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (75, 'The Biggest Winner Part 2', 33.25, 'https://www.youtube.com/watch?v=Fvl5wvd9HDI&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=76&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (76, 'Chef Kangs Cooking Secrets', 27.34, 'https://www.youtube.com/watch?v=waCmDYU1H2I&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=77&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (77, 'TAEHYUNs Restaurant Nightmare Part 1', 26.08, 'https://www.youtube.com/watch?v=wrkvMN6Cnrk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=78&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (78, 'TAEHYUNs Restaurant Nightmare Part 2', 28.27, 'https://www.youtube.com/watch?v=2BkQ5gfx7jk&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=79&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (79, 'PC Bang', 29.03, 'https://www.youtube.com/watch?v=EY_FTyMuJXo&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=80&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (null, 'Teaser', 0.36, 'https://www.youtube.com/watch?v=WxRKNuXyLQY&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=81&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           (80, 'Outlaws of HYBE Part 1', 26.21, 'https://www.youtube.com/watch?v=vsp415cdGXI&list=PLcZxoPUYVQX2vpHvmxzoSiffZh5Xw3TGe&index=82&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. TTerview ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('minisode1 : Blue Hour 553 interview', 9.50, 'https://www.youtube.com/watch?v=ZRSi0U8TRiY&list=PLcZxoPUYVQX0RORkGKfyt4PHeye2L0b1v&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Chaos Chapter: FREEZE interview',31.50, 'https://www.youtube.com/watch?v=wc-NdUgclBY&list=PLcZxoPUYVQX0RORkGKfyt4PHeye2L0b1v&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('minisode 2: Thursdays Child interview', 14.40, 'https://www.youtube.com/watch?v=hSicYGe2HSg&list=PLcZxoPUYVQX0RORkGKfyt4PHeye2L0b1v&index=1&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. TVShow ("nombre", "episodio", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Section TV', 954, null, 1, NOW()),
+           ('The Show', null, null, 1, NOW()),
+           ('After School Club', 361, 'https://www.youtube.com/watch?v=sMboKiTXdfk&list=PLI41iQU0lqhbEGdKM3oCAaqT_hcx5fuBo&index=1&t=39s&ab_channel=ARIRANGK-POP', 1, NOW()),
+           ('Young Hollywood', null, null, 1, NOW()),
+           ('Ban Ban Show parte 1', 4, 'https://www.youtube.com/watch?v=AmioZJdus_g&ab_channel=TheK-POP', 1, NOW()),
+           ('Ban Ban Show parte 2', 4, 'https://www.youtube.com/watch?v=T-mCyw0CUN8&ab_channel=TheK-POP', 1, NOW()),
+           ('We K-Pop', 17, 'https://www.youtube.com/watch?v=qmzt7Ui3Ny4&t=2435s&ab_channel=KBSWORLDTV', 1, NOW()),
+           ('We K-Pop', 18, 'https://www.youtube.com/watch?v=XNNYgKxlyxE&list=PLI41iQU0lqhZp_VmVaJDJEId4y94VfGRp&index=2&ab_channel=KBSWORLDTV', 1, NOW()),
+           ('Idol Room ', 76, null, 1, NOW()),
+           ('After School Club', 394, 'https://www.youtube.com/watch?v=wyHmmvo_2Bw&list=PLI41iQU0lqhbEGdKM3oCAaqT_hcx5fuBo&index=4&ab_channel=ARIRANGK-POP', 1, NOW()),
+           ('AbemaTV', null, 'https://www.youtube.com/watch?v=TLbj8B_wCK4&ab_channel=TXTGOLDENFILES', 1, NOW()),
+           ('Hanasaki o Times', null, null, 1, NOW()),
+           ('Buzz Rrhythm 02', null, null, 1, NOW()),
+           ('AbemaTV', null, null, 1, NOW()),
+           ('TMI NEWS', 42, null, 1, NOW()),
+           ('Civilization Express', 113, 'https://www.youtube.com/watch?v=v7KkNpyzHno&list=PLI41iQU0lqhaZfs5M9BLOzPHgNTnXDUMi&index=1&t=4s&ab_channel=%EB%AC%B8%EB%AA%85%ED%8A%B9%EA%B8%89-MMTG', 1, NOW()),
+           ('Civilization Express', 114, 'https://www.youtube.com/watch?v=tO-DEhq2sjI&list=PLI41iQU0lqhaZfs5M9BLOzPHgNTnXDUMi&index=2&ab_channel=%EB%AC%B8%EB%AA%85%ED%8A%B9%EA%B8%89-MMTG', 1, NOW()),
+           ('Weekly Idol', 461, 'https://www.youtube.com/watch?v=e-QrkovZBEg&list=PLI41iQU0lqhaMv9wHN5tbueW02DreEFLz&index=1&t=35s&ab_channel=1stonkpop', 1, NOW()),
+           ('Shindong Gayo', null, 'https://www.youtube.com/watch?v=IcWkacYDawE&ab_channel=%EC%8A%A4%EB%B8%8C%EC%8A%A4%EC%BC%80%EC%9D%B4%ED%8C%9D%2FSBSKPOP', 1, NOW()),
+           ('Hidden Track 2', null, null, 1, NOW()),
+           ('After School Club', 424, 'https://www.youtube.com/watch?v=1Ei5Yo-SHg0&list=PLI41iQU0lqhbEGdKM3oCAaqT_hcx5fuBo&index=6&ab_channel=ARIRANGK-POP', 1, NOW()),
+           ('Secret Friend of Idols', 15, 'https://www.youtube.com/watch?v=rgL1JJQo25U&list=PLI41iQU0lqhYe6XKE2-RNUjVhE_1qgJ5h&index=1&t=31s&ab_channel=ALLTHEK-POP', 1, NOW()),
+           ('Secret Friend of Idols', 'https://www.youtube.com/watch?v=7eLw4p7ChLA&list=PLI41iQU0lqhYe6XKE2-RNUjVhE_1qgJ5h&index=2&ab_channel=ALLTHEK-POP', 1, NOW()),
+           ('AbemaTV', null, null, 1, NOW()),
+           ('Idol Challenge: Another Class', 1, 'https://www.youtube.com/watch?v=fXUcb7p0dZM&list=PLI41iQU0lqhaKr0cudO_aqEoflmRqiya_&index=2&ab_channel=TheK-POP', 1, NOW()),
+           ('Idol Challenge: Another Class', 2, 'https://www.youtube.com/watch?v=0XV2ND6zc2s&list=PLI41iQU0lqhaKr0cudO_aqEoflmRqiya_&index=4&ab_channel=TheK-POP', 1, NOW()),
+           ('FANDOM TOUR', 1, 'https://www.youtube.com/watch?v=E_6I2aj56qE&list=PLI41iQU0lqhaZFco8pr04aBHYFu5J7r23&index=1&ab_channel=TheK-POP', 1, NOW()),
+           ('FANDOM TOUR', 2, 'https://www.youtube.com/watch?v=ruWxXfPOYts&list=PLI41iQU0lqhaZFco8pr04aBHYFu5J7r23&index=2&ab_channel=TheK-POP', 1, NOW()),
+           ('FANDOM TOUR', 3, 'https://www.youtube.com/watch?v=wSqNAKJYjDc&list=PLI41iQU0lqhaZFco8pr04aBHYFu5J7r23&index=3&ab_channel=TheK-POP', 1, NOW()),
+           ('FANDOM TOUR', 4, 'https://www.youtube.com/watch?v=SmbwvaRvInU&list=PLI41iQU0lqhaZFco8pr04aBHYFu5J7r23&index=4&ab_channel=TheK-POP', 1, NOW()),
+           ('Weekly Idol', 483, 'https://www.youtube.com/watch?v=UB-cRxGU9W8&list=PLI41iQU0lqhaMv9wHN5tbueW02DreEFLz&index=2&ab_channel=DeobiDeobi', 1, NOW()),
+           ('K-Bob Star', 14, 'https://www.youtube.com/watch?v=rDpIkyV2hiE&list=PLI41iQU0lqhYYVr_xj_lpQHXXZhjMiUcq&index=2&t=64s&ab_channel=%EC%BC%80%EC%9D%B4%EB%B0%A5%EC%8A%A4%ED%83%80%5BK-%EB%B0%A5STAR%5D', 1, NOW()),
+           ('After School Club', 446, 'https://www.youtube.com/watch?v=CHl_w97xkQg&list=PLI41iQU0lqhbEGdKM3oCAaqT_hcx5fuBo&index=8&ab_channel=ARIRANGK-POP', 1, NOW()),
+           ('Tok!Tok! Boni, Hani', null, 'https://www.youtube.com/watch?v=DCaNIu7w2n4&ab_channel=%EC%83%9D%EB%B0%A9%EC%86%A1%ED%86%A1%21%ED%86%A1%21%EB%B3%B4%EB%8B%88%ED%95%98%EB%8B%88BONIHANI', 1, NOW()),
+           ('Secret Friend of Idols', 37, 'https://www.youtube.com/watch?v=asLUIoPdVtU&list=PLI41iQU0lqhYe6XKE2-RNUjVhE_1qgJ5h&index=4&ab_channel=ALLTHEK-POP', 1, NOW()),
+           ('Secret Friend of Idols', 38, 'https://www.youtube.com/watch?v=5zu4lKl9FWk&list=PLI41iQU0lqhYe6XKE2-RNUjVhE_1qgJ5h&index=4&ab_channel=ALLTHEK-POP', 1, NOW()),
+           ('IDOL HOUSE', 13, 'https://www.youtube.com/watch?v=2ZabLWRVMyI&ab_channel=IDOLLIVE%5B%EC%95%84%EC%9D%B4%EB%8F%8C%EB%9D%BC%EC%9D%B4%EB%B8%8C%5D', 1, NOW()),
+           ('The Return of Superman', 363, 'https://www.youtube.com/watch?v=RyjRtpkDKrE&ab_channel=KBSWORLDTV', 1, NOW()),
+           ('Idol Wonderland', 7, 'https://ok.ru/video/3364052011537', 1, NOW()),
+           ('Wassup Man', 44, 'https://www.youtube.com/watch?v=3zBhbzABnnI&ab_channel=%EC%99%80%EC%8D%B9%EB%A7%A8-WassupMan', 1, NOW()),
+           ('After School Club', 474, 'https://www.youtube.com/watch?v=6JshF_FB01U&list=PLI41iQU0lqhbEGdKM3oCAaqT_hcx5fuBo&index=12&ab_channel=ARIRANGK-POP', 1, NOW()),
+           ('Weekly Idol', 515, 'https://www.youtube.com/watch?v=SKVKrQ181HE&list=PLI41iQU0lqhaMv9wHN5tbueW02DreEFLz&index=3&ab_channel=1stonkpop', 1, NOW()),
+           ('Good Morning America', null, null, 1, NOW()),
+           ('Yoo Hee Yeols Sketchbook', null, null, 1, NOW()),
+           ('Secret Friend of Idols 2', 19, 'https://www.youtube.com/watch?v=6ZBZvXdW2zA&list=PLI41iQU0lqhYe6XKE2-RNUjVhE_1qgJ5h&index=5&ab_channel=ALLTHEK-POP', 1, NOW()),
+           ('Civilization Express', 205, 'https://www.youtube.com/watch?v=81_vmDsMZjc&list=PLI41iQU0lqhaZfs5M9BLOzPHgNTnXDUMi&index=3&ab_channel=%EB%AC%B8%EB%AA%85%ED%8A%B9%EA%B8%89-MMTG', 1, NOW()),
+           ('Jessis Showterview', 63, 'https://www.youtube.com/watch?v=8NptiH-EHp8&list=PLI41iQU0lqhaZIr_HzDDcqudLPhGNf6Xy&index=1&ab_channel=%EB%AA%A8%EB%B9%84%EB%94%95Mobidic', 1, NOW());
+
+INSERT INTO public. TVShowyMas ("cadenaEstacion", "idRadioShow", "idTVShow", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Arirang', null, 3, 1, NOW()),
+           ('Arirang', null, 8, 1, NOW()),
+           ('Arirang', null, 18, 1, NOW()),
+           ('Arirang', null, 25, 1, NOW()),
+           ('Arirang', null, 33, 1, NOW()),
+           ('CBC', null, 10, 1, NOW()),
+           ('EBS', null, 26, 1, NOW()),
+           ('EBS', 8, null, 1, NOW()),
+           ('JTBC', null, 7, 1, NOW()),
+           ('JTBC', null, 17, 1, NOW()),
+           ('JTBC', null, 30, 1, NOW()),
+           ('KBS', null, 6, 1, NOW()),
+           ('KBS', null, 29, 1, NOW()),
+           ('KBS', null, 36, 1, NOW()),
+           ('KBS', 4, null, 1, NOW()),
+           ('KBS', 7, null, 1, NOW()),
+           ('KBS', 9, null, 1, NOW()),
+           ('KBS', 10, null, 1, NOW()),
+           ('KBS', 11, null, 1, NOW()),
+           ('MBC', null, 1, 1, NOW()),
+           ('MBC', null, 19, 1, NOW()),
+           ('MBC', null, 27, 1, NOW()),
+           ('MBC', null, 37, 1, NOW()),
+           ('MBC', 1, null, 1, NOW()),
+           ('MBC', 2, null, 1, NOW()),
+           ('MBC', 6, null, 1, NOW()),
+           ('MBC Eevery1', null, 15, 1, NOW()),
+           ('MBC Eevery1', null, 23, 1, NOW()),
+           ('MBC Eevery1', null, 34, 1, NOW()),
+           ('Mnet', null, 13, 1, NOW()),
+           ('NAVER', 3, null, 1, NOW()),
+           ('SBS', null, 2, 1, NOW()),
+           ('SBS', null, 5, 1, NOW()),
+           ('SBS', null, 14, 1, NOW()),
+           ('SBS', null, 16, 1, NOW()),
+           ('SBS', null, 21, 1, NOW()),
+           ('SBS', null, 22, 1, NOW()),
+           ('SBS', null, 28, 1, NOW()),
+           ('SBS', null, 38, 1, NOW()),
+           ('SBS', null, 39, 1, NOW()),
+           ('SBS', 5, null, 1, NOW()),
+           ('Tokopedia', null, 31, 1, NOW()),
+           ('Youtube', null, 24, 1, NOW()),
+           ('Youtube', null, 32, 1, NOW());
+
+INSERT INTO public. TXT ("nombre", "agencia", "pais", "debut", "idUsuarioCrea", "fechaCrea")
+    VALUES ('투모로우바이투게더 (Tumoroubaitugedeo)', ' Big Hit', ' Corea del Sur', '04/03/2019', 1, NOW()),
+           ('TXT (TOMORROW X TOGETHER)', ' Republic Records / Universal Music Group', ' Estados Unidos', '04/03/2019', 1, NOW()),
+           ('トゥモローバイトゥギャザー (To~umorōbaito~ugyazā)', ' Universal Music', ' Japon', '15/01/2020', 1, NOW());
+
+INSERT INTO public. TXTEpisode ("titulo", "duracion", "link", "idUsuarioCrea", "fechaCrea")
+    VALUES ('The Dream Chapter: STAR Jacket shooting sketch', 4.59, ' https://www.youtube.com/watch?v=DsdGXtWnZpg&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=69&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('CROWN MV Shooting Sketch', 4.34, ' https://www.youtube.com/watch?v=jkgdcIlq_c8&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=68&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Debut week behind Story', 16.23, ' https://www.youtube.com/watch?v=M1yAROL0WCY&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=67&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('DEBUT SHOWCASE : STAR behind story', 20.12, ' https://www.youtube.com/watch?v=ZSJK7AzpYYE&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=66&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cat & Dog Jacket shooting sketch', 3.04, ' https://www.youtube.com/watch?v=Ach0PG3F__w&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=65&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cat & Dog MV Shooting Sketch', 4.54, ' https://www.youtube.com/watch?v=Y8WkX5R-cgo&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=64&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('W Korea Photo Shooting Sketch', 4.41, ' https://www.youtube.com/watch?v=3AD8Cs7eNOc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=63&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('STAR in US behind story @NewYork', 19.43, ' https://www.youtube.com/watch?v=6oajj0hxvu4&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=62&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@2019MGMA', 14.01, ' https://www.youtube.com/watch?v=K6DQpaeaxcs&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=61&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Dream Chapter: MAGIC Jacket shooting sketch', 5.43, ' https://www.youtube.com/watch?v=4PJ3p5b4pcA&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=60&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Run Away MV Shooting Sketch', 5.29, ' https://www.youtube.com/watch?v=VmzP_It5b5U&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=59&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@2019 VLIVE AWARDS', 7.06, ' https://www.youtube.com/watch?v=MpEzj5vbCA4&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=58&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@2019 MMA', 11.59, ' https://www.youtube.com/watch?v=-gV5GYOYVlg&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=57&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@2019 MAMA', 12.46, ' https://www.youtube.com/watch?v=tb6qWTYGd7s&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=56&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@2020 GDA', 10.41, ' https://www.youtube.com/watch?v=NouoBequsqU&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=55&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('DAZED Photo Shooting Sketch', 3.49, ' https://www.youtube.com/watch?v=ntyxscOEZ0E&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=54&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@29th SMA', 9.04, ' https://www.youtube.com/watch?v=FwYWgaA4Bgc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=53&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@star1 Photo Shooting Sketch', 3.53, ' https://www.youtube.com/watch?v=TKg8Yq_sVn0&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=52&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Dream Chapter: ETERNITY Concept Trailer Shooting Sketch', 4.15, ' https://www.youtube.com/watch?v=fO_WjFZEF4s&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=51&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Dream Chapter: ETERNITY Jacket shooting sketch', 5.19, ' https://www.youtube.com/watch?v=6HInugfStrI&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=50&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Cant You See Me? MV Shooting Sketch', 9.19, ' https://www.youtube.com/watch?v=1lVc_xUmOME&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=49&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('PUMA MV Shooting Sketch', 7.16, ' https://www.youtube.com/watch?v=8nBZSrB3dso&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=48&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('ETERNITY UNIFORM Photo Shooting Sketch', 4.19, ' https://www.youtube.com/watch?v=LL5S9tX_sMI&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=47&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('SOOBIN Music Bank MC Debut Behind (with. HUENINGKAI)', 23.40, ' https://www.youtube.com/watch?v=UeSaEvB6bYY&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=46&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('teenVOGUE Photo Shooting Sketch', 5.18, ' https://www.youtube.com/watch?v=CEFNWl_TFJk&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=45&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('minisode1 : Blue Hour Jacket shooting sketch', 7.02, ' https://www.youtube.com/watch?v=SqJTyys-FKc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=44&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Blue Hour MV shooting sketch', 6.11, ' https://www.youtube.com/watch?v=RafBYBAWXTc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=43&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('BLUE HOUR UNIFORM Photo Shooting Sketch', 5.04, ' https://www.youtube.com/watch?v=iA_uTt_NOEc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=42&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('We Lost The Summer MV Shooting Sketch', 8.14, ' https://www.youtube.com/watch?v=thmnkpr6Zeo&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=41&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('YEONJUNs Live On Cameo Appearance Behind the Scenes', 8.44, ' https://www.youtube.com/watch?v=jm9ZtU34CBU&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=40&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The MMA 2020 Behind the Scenes', 8.46, ' https://www.youtube.com/watch?v=_YPwAPS6RnI&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=39&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('PLAYGROUND Behind the Scenes', 11.04, ' https://www.youtube.com/watch?v=fAnF3A8NTwo&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=38&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('YEONJUNs 2021 F/W NYFW Behind the Scenes', 14.41, ' https://www.youtube.com/watch?v=g9puiDrflts&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=37&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2020 MAMA Behind the Scenes', 18.49, ' https://www.youtube.com/watch?v=TeaerOC2fXA&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=36&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('VOGUE Photo Shooting Sketch', 4.11, ' https://www.youtube.com/watch?v=sIi5yf519r4&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=35&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TAEHYUN & HUENINGKAI on Listen', 8.28, ' https://www.youtube.com/watch?v=uKIF2B-G9XA&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=34&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Way Home MV Shooting Sketch', 4.11, ' https://www.youtube.com/watch?v=HbY1cbbPpuc&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=33&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Mood Diary Shooting Sketch', 7.52, ' https://www.youtube.com/watch?v=EzJV1AD5UT0&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=32&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('2020 SBS Kayo Daejeon Behind the Scenes', 16.11, ' https://www.youtube.com/watch?v=0WgnbtCdV_w&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=31&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('BEOMGYU on Kiss the Radio Behind the Scenes', 8.23, ' https://www.youtube.com/watch?v=f2f_x2VbqHw&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=30&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Chaos Chapter: FREEZE Concept Trailer Shooting Sketch', 8.22, ' https://www.youtube.com/watch?v=pRUzdWqOxkw&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=29&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Chaos Chapter: FREEZE Jacket Shooting Sketch', 8.57, ' https://www.youtube.com/watch?v=gMTqa6KaHAg&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=28&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TAEHYUN & HUENINGKAI Listen Final Show', 10.44, ' https://www.youtube.com/watch?v=6F-vwPPe7Es&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=27&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('0X1=LOVESONG (I Know I Love You) feat. Seori MV Shooting Sketch', 8.48, ' https://www.youtube.com/watch?v=_XcNKEDbpzg&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=26&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('SOOBIN & YEONJUN GQ Photo Shooting Sketch', 4.18, ' https://www.youtube.com/watch?v=bxmJkvdaZys&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Magic MV Shooting Sketch', 8.03, ' https://www.youtube.com/watch?v=9rr0OjZ6sus&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Magic Special Performance Video Shooting Sketch', 5.15, ' https://www.youtube.com/watch?v=whOGMdQ52Ok&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Weverse Magazine Photo Shooting Sketch', 4.55, ' https://www.youtube.com/watch?v=WttQ-mV_JGs&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('The Chaos Chapter: FIGHT OR ESCAPE Jacket Shooting Sketch', 9.38, ' https://www.youtube.com/watch?v=110W02k8hP0&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=21&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('LO$ER=LO♡ER MV Shooting Sketch', 8.38, ' https://www.youtube.com/watch?v=Z7KobIuX11M&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('YEONJUNs ELLE Photo Shooting Sketch', 3.59, ' https://www.youtube.com/watch?v=6u5U_Uf91A4&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('HUENINGKAIs GQ Photo Shooting Sketch', 4.22, ' https://www.youtube.com/watch?v=MNDWKggBrQA&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('YEONJUNs Blockbuster Recording Behind the Scenes', 5.16, ' https://www.youtube.com/watch?v=wYSqgcjf2ag&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Halloween Edition Save MOA! Ghost Hunter TXT Behind the Scenes', 8.25, ' https://www.youtube.com/watch?v=I189m3XFwqw&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TXT on Kiss the Radio Behind the Scenes', 15.52, ' https://www.youtube.com/watch?v=wQZ0JHfnSEk&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=15&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('VOGUE December Issue Photo Shooting Sketch', 5.44, ' https://www.youtube.com/watch?v=FqfIZdd9xoQ&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=14&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('EUPHORIA. Photo Shooting Sketch', 3.43, ' https://www.youtube.com/watch?v=m1bx4HLut2o&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Music Banks Special MC HUENINGKAI Sketch', 5.05, ' https://www.youtube.com/watch?v=B5im1eog-Ng&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Sweet Dreams Live Clip Behind the Scenes', 4.50, ' https://www.youtube.com/watch?v=TvAK69ZjWJ8&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@ 2021 MMA', 15.47, ' https://www.youtube.com/watch?v=aB7lMRlRVT0&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=11', 1, NOW()),
+           ('@ 2021 MAMA', 7.10, ' https://www.youtube.com/watch?v=MtMznW6V7IQ&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@ 2021 SBS Gayo Daejeon', 4.34, ' https://www.youtube.com/watch?v=eWSqsyaGAPA&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('@ 2022 GDA', 14.37, ' https://www.youtube.com/watch?v=MQ4-8epwp2g&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('SOOBINs Marie Claire Photoshoot Sketch', 5.18, ' https://www.youtube.com/watch?v=B71PU-Rsiww&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('ELLE Photoshoot Sketch', 3.58, ' https://www.youtube.com/watch?v=oVYFZAF7Jsg&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('TAEHYUNs Lee Mujin Service Shoot Sketch', 4.21, ' https://www.youtube.com/watch?v=vu7i0DWygoI&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('YEONJUNs Inkigayo MC Debut Sketch', 10.18, ' https://www.youtube.com/watch?v=7DrO-ZsR2G4&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('minisode 2: Thursdays Child Album Cover Shoot Sketch', 8.37, ' https://www.youtube.com/watch?v=HVQOqfOsw6o&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW()),
+           ('Good Boy Gone Bad MV Shoot Sketch', 10.43, ' https://www.youtube.com/watch?v=xTmpvzuD_iI&list=PLcZxoPUYVQX2L0AN696uMAHUctoCsSmPx&index=1&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, NOW());
+
+INSERT INTO public. TXTOriginal ("descripcion", "numero", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Contenido Original de Tomorrow by Together', 9, 1, NOW());
+
+INSERT INTO public. TXTxEnhypen ("tipo", "plataforma", "idDocumental", "idPlayground", "idUsuarioCrea", "fechaCrea")
+    VALUES ('Documental', ' Youtube, Weverse', 1, null, 1, NOW()),
+           ('Show', ' Youtube, Weverse', null, 1, 1, NOW()),
+           ('Show', ' Youtube, Weverse', null, 2, 1, NOW());
+
+INSERT INTO public. XTime ("titulo", "duracion", "link", "idIntegrante", "idUsuarioCrea", "fechaCrea")
+    VALUES (190905, 3.20, ' https://www.youtube.com/watch?v=c6ZwfG0hTUE&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=26&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW()),
+           (190919, 2.56, ' https://www.youtube.com/watch?v=qzIwvGlzZS8&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=25&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           (190922, 2.43, ' https://www.youtube.com/watch?v=-AyxbM72654&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=24&ab_channel=TOMORROWXTOGETHEROFFICIAL', 2, 1, NOW()),
+           (190929, 4.36, ' https://www.youtube.com/watch?v=G-sjsnqDXkI&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=23&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           (191005, 4.56, ' https://www.youtube.com/watch?v=-IPA8e-mWWc&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=22&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (200328, 2.59, ' https://www.youtube.com/watch?v=LZQl99FCyzM&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=21&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           (200404, 3.30, ' https://www.youtube.com/watch?v=9iuQRkPBumo&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=20&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           (200411, 4.01, ' https://www.youtube.com/watch?v=4PNAysR0H5s&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=19&ab_channel=TOMORROWXTOGETHEROFFICIAL', 2, 1, NOW()),
+           (200418, 4.09, ' https://www.youtube.com/watch?v=K4uLqNd0egE&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=18&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (200425, 3.51, ' https://www.youtube.com/watch?v=ouiAeAV6fGA&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=17&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW()),
+           (200502, 11.26, ' https://www.youtube.com/watch?v=-JNltSJbHuU&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=16&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           (200905, 3.34, ' https://www.youtube.com/watch?v=6AHp3brEe8E&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=15&ab_channel=TOMORROWXTOGETHEROFFICIAL', 2, 1, NOW()),
+           (200909, 3.26, ' https://www.youtube.com/watch?v=zafwyEU3J10&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=14&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (200912, 3.37, ' https://www.youtube.com/watch?v=qQ8hiTG3z1s&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=13&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW()),
+           (200916, 3.10, ' https://www.youtube.com/watch?v=qutnpRZTWU4&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=12&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           (200919, 3.46, ' https://www.youtube.com/watch?v=wCdQ_vHf-LQ&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=11&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           (200926, 13.58, ' https://www.youtube.com/watch?v=e1UcQ1wpyRU&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=10&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (210417, 3.34, ' https://www.youtube.com/watch?v=OIUorqgnXAk&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=9&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (210421, 3.55, ' https://www.youtube.com/watch?v=DN0_lPwLvlY&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=8&ab_channel=TOMORROWXTOGETHEROFFICIAL', 4, 1, NOW()),
+           (210424, 3.40, ' https://www.youtube.com/watch?v=vY3Jm2om_Go&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=7&ab_channel=TOMORROWXTOGETHEROFFICIAL', 2, 1, NOW()),
+           (210428, 5.16, ' https://www.youtube.com/watch?v=ugpKdiZAStU&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=6&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           (210505, 3.26, ' https://www.youtube.com/watch?v=BocjorRjCA0&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=5&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW()),
+           (210508, 13.20, ' https://www.youtube.com/watch?v=q6W72vnP_w8&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=4&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW()),
+           (220330, 6.38, ' https://www.youtube.com/watch?v=UfvxzXOnGIE&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=3&ab_channel=TOMORROWXTOGETHEROFFICIAL', 5, 1, NOW()),
+           (220406, 5.16, ' https://www.youtube.com/watch?v=OFHYzWtsOWk&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&index=2&ab_channel=TOMORROWXTOGETHEROFFICIAL', 1, 1, NOW()),
+           (220413, 5.51, ' https://www.youtube.com/watch?v=AcUxJantUJ8&list=PLcZxoPUYVQX2NWf-amjl7XHxxFXMDJWTu&ab_channel=TOMORROWXTOGETHEROFFICIAL', 3, 1, NOW());
+
+INSERT INTO public. AlbumCancion ("idAlbum", "idCancion", "idUsuarioCrea", "fechaCrea")
+    VALUES (1, 1, 1, NOW()),
+		   (1, 2, 1, NOW()),
+		   (1, 3, 1, NOW()),
+		   (1, 4, 1, NOW()),
+		   (1, 5, 1, NOW()),
+		   (2, 6, 1, NOW()),
+		   (2, 7, 1, NOW()),
+		   (2, 8, 1, NOW()),
+		   (2, 9, 1, NOW()),
+		   (2, 10, 1, NOW()),
+		   (2, 11, 1, NOW()),
+		   (2, 12, 1, NOW()),
+		   (2, 13, 1, NOW()),
+		   (3, 14, 1, NOW()),
+		   (3, 15, 1, NOW()),
+		   (3, 16, 1, NOW()),
+		   (4, 17, 1, NOW()),
+		   (4, 18, 1, NOW()),
+		   (4, 19, 1, NOW()),
+		   (4, 20, 1, NOW()),
+		   (4, 21, 1, NOW()),
+		   (4, 22, 1, NOW()),
+		   (5, 23, 1, NOW()),
+		   (5, 24, 1, NOW()),
+		   (5, 25, 1, NOW()),
+		   (6, 26, 1, NOW()),
+		   (6, 27, 1, NOW()),
+		   (6, 28, 1, NOW()),
+		   (6, 29, 1, NOW()),
+		   (6, 30, 1, NOW()),
+		   (7, 31, 1, NOW()),
+		   (7, 32, 1, NOW()),
+		   (7, 33, 1, NOW()),
+		   (7, 14, 1, NOW()),
+		   (7, 15, 1, NOW()),
+		   (7, 16, 1, NOW()),
+		   (7, 23, 1, NOW()),
+		   (7, 24, 1, NOW()),
+		   (7, 25, 1, NOW()),
+		   (7, 34, 1, NOW()),
+		   (8, 35, 1, NOW()),
+		   (8, 36, 1, NOW()),
+		   (8, 37, 1, NOW()),
+		   (8, 38, 1, NOW()),
+		   (8, 39, 1, NOW()),
+		   (8, 40, 1, NOW()),
+		   (8, 41, 1, NOW()),
+		   (8, 42, 1, NOW()),
+		   (9, 43, 1, NOW()),
+		   (9, 35, 1, NOW()),
+		   (9, 36, 1, NOW()),
+		   (9, 37, 1, NOW()),
+		   (9, 38, 1, NOW()),
+		   (9, 39, 1, NOW()),
+		   (9, 40, 1, NOW()),
+		   (9, 44, 1, NOW()),
+		   (9, 41, 1, NOW()),
+		   (9, 42, 1, NOW()),
+		   (9, 45, 1, NOW()),
+		   (10, 46, 1, NOW()),
+		   (10, 47, 1, NOW()),
+		   (10, 48, 1, NOW()),
+		   (10, 37, 1, NOW()),
+		   (11, 49, 1, NOW()),
+		   (11, 50, 1, NOW()),
+		   (11, 51, 1, NOW()),
+		   (11, 52, 1, NOW()),
+		   (11, 53, 1, NOW());
+
+INSERT INTO public. AnuncioIntegrante ("idAnuncio", "idIntegrante", "idUsuarioCrea", "fechaCrea")
+    VALUES (1, 1, 1, NOW()),
+		   (1, 2, 1, NOW()),
+		   (1, 3, 1, NOW()),
+		   (1, 4, 1, NOW()),
+		   (1, 5, 1, NOW()),
+		   (2, 1, 1, NOW()),
+		   (2, 2, 1, NOW()),
+		   (2, 3, 1, NOW()),
+		   (2, 4, 1, NOW()),
+		   (2, 5, 1, NOW()),
+		   (3, 1, 1, NOW()),
+		   (3, 2, 1, NOW()),
+		   (3, 3, 1, NOW()),
+		   (3, 4, 1, NOW()),
+		   (3, 5, 1, NOW()),
+		   (4, 1, 1, NOW()),
+		   (4, 2, 1, NOW()),
+		   (4, 3, 1, NOW()),
+		   (4, 4, 1, NOW()),
+		   (4, 5, 1, NOW()),
+		   (5, 1, 1, NOW()),
+		   (5, 2, 1, NOW()),
+		   (5, 3, 1, NOW()),
+		   (5, 4, 1, NOW()),
+		   (5, 5, 1, NOW()),
+		   (6, 1, 1, NOW()),
+		   (6, 2, 1, NOW()),
+		   (6, 3, 1, NOW()),
+		   (6, 4, 1, NOW()),
+		   (6, 5, 1, NOW()),
+		   (7, 1, 1, NOW()),
+		   (7, 2, 1, NOW()),
+		   (7, 3, 1, NOW()),
+		   (7, 4, 1, NOW()),
+		   (7, 5, 1, NOW()),
+		   (8, 1, 1, NOW()),
+		   (8, 2, 1, NOW()),
+		   (8, 3, 1, NOW()),
+		   (8, 4, 1, NOW()),
+		   (8, 5, 1, NOW()),
+		   (9, 1, 1, NOW()),
+		   (9, 2, 1, NOW()),
+		   (9, 3, 1, NOW()),
+		   (9, 4, 1, NOW()),
+		   (9, 5, 1, NOW()),
+		   (10, 1, 1, NOW()),
+		   (10, 2, 1, NOW()),
+		   (10, 3, 1, NOW()),
+		   (10, 4, 1, NOW()),
+		   (10, 5, 1, NOW());
+
+INSERT INTO public. CancionMV ("idCancion", "idMV", "idUsuarioCrea", "fechaCrea")
+    VALUES (2, 1, 1, NOW()),
+		   (2, 2, 1, NOW()),
+		   (1, 3, 1, NOW()),
+		   (4, 4, 1, NOW()),
+		   (5, 5, 1, NOW()),
+		   (7, 6, 1, NOW()),
+		   (11, 7, 1, NOW()),
+		   (13, 8, 1, NOW()),
+		   (14, 9, 1, NOW()),
+		   (18, 10, 1, NOW()),
+		   (21, 11, 1, NOW()),
+		   (22, 12, 1, NOW()),
+		   (23, 13, 1, NOW()),
+		   (27, 14, 1, NOW()),
+		   (27, 15, 1, NOW()),
+		   (28, 16, 1, NOW()),
+		   (33, 17, 1, NOW()),
+		   (30, 18, 1, NOW()),
+		   (36, 19, 1, NOW()),
+		   (36, 20, 1, NOW()),
+		   (36, 21, 1, NOW()),
+		   (36, 22, 1, NOW()),
+		   (37, 23, 1, NOW()),
+		   (43, 24, 1, NOW()),
+		   (42, 25, 1, NOW()),
+		   (46, 26, 1, NOW()),
+		   (50, 27, 1, NOW());
+
+INSERT INTO public. RevistaIntegrante ("idRevista", "idIntegrante", "idUsuarioCrea", "fechaCrea")
+    VALUES (1, 1, 1, NOW()),
+		   (1, 2, 1, NOW()),
+		   (1, 3, 1, NOW()),
+		   (1, 4, 1, NOW()),
+		   (1, 5, 1, NOW()),
+		   (2, 1, 1, NOW()),
+		   (2, 2, 1, NOW()),
+		   (2, 3, 1, NOW()),
+		   (2, 4, 1, NOW()),
+		   (2, 5, 1, NOW()),
+		   (3, 1, 1, NOW()),
+		   (3, 2, 1, NOW()),
+		   (3, 3, 1, NOW()),
+		   (3, 4, 1, NOW()),
+		   (3, 5, 1, NOW()),
+		   (4, 1, 1, NOW()),
+		   (4, 2, 1, NOW()),
+		   (4, 3, 1, NOW()),
+		   (4, 4, 1, NOW()),
+		   (4, 5, 1, NOW()),
+		   (5, 1, 1, NOW()),
+		   (5, 2, 1, NOW()),
+		   (5, 3, 1, NOW()),
+		   (5, 4, 1, NOW()),
+		   (5, 5, 1, NOW()),
+		   (6, 1, 1, NOW()),
+		   (6, 2, 1, NOW()),
+		   (6, 3, 1, NOW()),
+		   (6, 4, 1, NOW()),
+		   (6, 5, 1, NOW()),
+		   (7, 1, 1, NOW()),
+		   (7, 2, 1, NOW()),
+		   (7, 3, 1, NOW()),
+		   (7, 4, 1, NOW()),
+		   (7, 5, 1, NOW()),
+		   (8, 1, 1, NOW()),
+		   (8, 2, 1, NOW()),
+		   (8, 3, 1, NOW()),
+		   (8, 4, 1, NOW()),
+		   (8, 5, 1, NOW()),
+		   (9, 1, 1, NOW()),
+		   (9, 2, 1, NOW()),
+		   (9, 3, 1, NOW()),
+		   (9, 4, 1, NOW()),
+		   (9, 5, 1, NOW()),
+		   (10, 1, 1, NOW()),
+		   (10, 2, 1, NOW()),
+		   (10, 3, 1, NOW()),
+		   (10, 4, 1, NOW()),
+		   (10, 5, 1, NOW());
